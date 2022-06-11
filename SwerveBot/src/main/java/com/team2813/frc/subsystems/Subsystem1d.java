@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Subsystem1d<P extends Subsystem1d.Position> extends SubsystemBase {
 
-    private Motor motor;
+    private final Motor motor;
     protected PeriodicIO periodicIO = new PeriodicIO();
     private boolean zeroed = false;
     private boolean motionMagicEnabled = true;

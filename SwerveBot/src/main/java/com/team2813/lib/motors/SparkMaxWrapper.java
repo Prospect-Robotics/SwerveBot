@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SparkMaxWrapper extends CANSparkMax implements Motor {
-    List<CANSparkMax> followers = new ArrayList<>();
-    private RelativeEncoder encoder;
-    private SparkMaxPIDController pidController;
+    private final List<CANSparkMax> followers = new ArrayList<>();
+    private final RelativeEncoder encoder;
+    private final SparkMaxPIDController pidController;
 
     /**
      * Create a new object to control a SPARK MAX motor Controller
