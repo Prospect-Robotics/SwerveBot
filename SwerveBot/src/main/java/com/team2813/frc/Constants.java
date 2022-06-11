@@ -40,6 +40,10 @@ public final class Constants {
     public static final int BACK_RIGHT_STEER_ID = 11;
     public static final int BACK_RIGHT_ENCODER_ID = 12;
 
+    // Other Drive Stuff
+
+    public static final int PIGEON2_ID = 13;
+
     // Physical Drive Constants
 
     // Steer offsets
