@@ -5,7 +5,9 @@
 
 package com.team2813.frc;
 
+import com.team2813.frc.commands.DefaultDriveCommand;
 import com.team2813.frc.commands.ExampleCommand;
+import com.team2813.frc.subsystems.Drive;
 import com.team2813.frc.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,6 +25,9 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    private final Drive drive = new Drive();
+
+    private final XboxController controller = new XboxController(0);
     
     private final ExampleCommand autoCommand = new ExampleCommand(exampleSubsystem);
     
@@ -30,6 +35,13 @@ public class RobotContainer
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
+        drive.setDefaultCommand(new DefaultDriveCommand(
+                drive,
+                () -> -modifyAxis(controller.getLeftY()) * Drive.MAX_VELOCITY,
+                () -> -modifyAxis(controller.getLeftX()) * Drive.MAX_VELOCITY,
+                () -> -modifyAxis(controller.getRightX()) * Drive.MAX_ANGULAR_VELOCITY
+        ));
+
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -57,5 +69,25 @@ public class RobotContainer
     {
         // An ExampleCommand will run in autonomous
         return autoCommand;
+    }
+
+    private static double deadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0) {
+                return (value - deadband) / (1 - deadband);
+            }
+            else {
+                return (value + deadband) / (1 - deadband);
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+
+    private static double modifyAxis(double value) {
+        value = deadband(value, 0.05);
+        value = Math.copySign(value * value, value);
+        return value;
     }
 }
