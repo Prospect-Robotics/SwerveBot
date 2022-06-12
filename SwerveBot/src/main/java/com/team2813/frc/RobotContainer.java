@@ -5,6 +5,7 @@
 
 package com.team2813.frc;
 
+import com.team2813.frc.commands.CalibrateOffsetsCommand;
 import com.team2813.frc.commands.DefaultDriveCommand;
 import com.team2813.frc.commands.ExampleCommand;
 import com.team2813.frc.subsystems.Drive;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
-
+import static com.team2813.frc.Controls.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,6 +58,8 @@ public class RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+
+        START_MODULE_CAL.whenActive(new CalibrateOffsetsCommand(drive));
     }
     
     

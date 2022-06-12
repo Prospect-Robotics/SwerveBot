@@ -37,10 +37,10 @@ public class Drive extends SubsystemBase {
 
     private final PigeonWrapper pigeon = new PigeonWrapper(PIGEON_ID);
 
-    private final SwerveModule frontLeftModule;
-    private final SwerveModule frontRightModule;
-    private final SwerveModule backLeftModule;
-    private final SwerveModule backRightModule;
+    private SwerveModule frontLeftModule;
+    private SwerveModule frontRightModule;
+    private SwerveModule backLeftModule;
+    private SwerveModule backRightModule;
 
     private ChassisSpeeds chassisSpeedDemand = new ChassisSpeeds(0, 0, 0);
 
@@ -94,6 +94,57 @@ public class Drive extends SubsystemBase {
 
     public void resetHeading() {
         pigeon.setHeading(0);
+    }
+
+    public void resetModules() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
+        frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Front Left Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(0, 0),
+                Mk4SwerveModuleHelper.GearRatio.L2,
+                FRONT_LEFT_DRIVE_ID,
+                FRONT_LEFT_STEER_ID,
+                FRONT_LEFT_ENCODER_ID,
+                FRONT_LEFT_STEER_OFFSET
+        );
+
+        frontRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Front Right Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(2, 0),
+                Mk4SwerveModuleHelper.GearRatio.L2,
+                FRONT_RIGHT_DRIVE_ID,
+                FRONT_RIGHT_STEER_ID,
+                FRONT_RIGHT_ENCODER_ID,
+                FRONT_RIGHT_STEER_OFFSET
+        );
+
+        backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Back Left Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(4, 0),
+                Mk4SwerveModuleHelper.GearRatio.L2,
+                BACK_LEFT_DRIVE_ID,
+                BACK_LEFT_STEER_ID,
+                BACK_LEFT_ENCODER_ID,
+                BACK_LEFT_STEER_OFFSET
+        );
+
+        backRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Back Right Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(6, 0),
+                Mk4SwerveModuleHelper.GearRatio.L2,
+                BACK_RIGHT_DRIVE_ID,
+                BACK_RIGHT_STEER_ID,
+                BACK_RIGHT_ENCODER_ID,
+                BACK_RIGHT_STEER_OFFSET
+        );
+    }
+
+    public void setCalibratedSteerOffsets() {
+        FRONT_LEFT_STEER_OFFSET = -frontLeftModule.getSteerAngle();
+        FRONT_RIGHT_STEER_OFFSET = -frontRightModule.getSteerAngle();
+        BACK_LEFT_STEER_OFFSET = -backLeftModule.getSteerAngle();
+        BACK_RIGHT_STEER_OFFSET = -backRightModule.getSteerAngle();
     }
 
     public void drive(ChassisSpeeds demand) {
