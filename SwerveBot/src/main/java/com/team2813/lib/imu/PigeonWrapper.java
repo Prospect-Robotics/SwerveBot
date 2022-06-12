@@ -14,10 +14,7 @@ public class PigeonWrapper extends PigeonIMU {
     }
 
     public double getHeading() {
-        if (getState() == PigeonState.Ready) {
-            return getYaw();
-        }
-        return 0;
+        return getYaw();
     }
 
     public void setHeading(double angle) {
