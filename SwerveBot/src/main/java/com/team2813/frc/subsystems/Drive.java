@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.frc.Constants.*;
@@ -42,7 +45,11 @@ public class Drive extends SubsystemBase {
     private ChassisSpeeds chassisSpeedDemand = new ChassisSpeeds(0, 0, 0);
 
     public Drive() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
         frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Front Left Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(0, 0),
                 Mk4SwerveModuleHelper.GearRatio.L2,
                 FRONT_LEFT_DRIVE_ID,
                 FRONT_LEFT_STEER_ID,
@@ -51,6 +58,8 @@ public class Drive extends SubsystemBase {
         );
 
         frontRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Front Right Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(2, 0),
                 Mk4SwerveModuleHelper.GearRatio.L2,
                 FRONT_RIGHT_DRIVE_ID,
                 FRONT_RIGHT_STEER_ID,
@@ -59,6 +68,8 @@ public class Drive extends SubsystemBase {
         );
 
         backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Back Left Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(4, 0),
                 Mk4SwerveModuleHelper.GearRatio.L2,
                 BACK_LEFT_DRIVE_ID,
                 BACK_LEFT_STEER_ID,
@@ -67,6 +78,8 @@ public class Drive extends SubsystemBase {
         );
 
         backRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                tab.getLayout("Back Right Module", BuiltInLayouts.kList)
+                        .withSize(2, 4).withPosition(6, 0),
                 Mk4SwerveModuleHelper.GearRatio.L2,
                 BACK_RIGHT_DRIVE_ID,
                 BACK_RIGHT_STEER_ID,

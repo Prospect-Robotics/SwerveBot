@@ -47,10 +47,10 @@ public final class Constants {
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(0); // FIXME Measure and set front left steer offset
-    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(0); // FIXME Measure and set front right steer offset
-    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(0); // FIXME Measure and set back left steer offset
-    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0); // FIXME Measure and set bakc right steer offset
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(142.9046630859375);
+    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(359.37652587890625);
+    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(80.76324462890625);
+    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(132.09686279296875);
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
