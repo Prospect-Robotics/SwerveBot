@@ -4,6 +4,7 @@ import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.team2813.lib.imu.Pigeon2Wrapper;
+import com.team2813.lib.imu.PigeonWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -31,7 +32,7 @@ public class Drive extends SubsystemBase {
             new Translation2d(-TRACKWIDTH / 2, -WHEELBASE / 2)
     );
 
-    private final Pigeon2Wrapper pigeon_v2 = new Pigeon2Wrapper(PIGEON2_ID);
+    private final PigeonWrapper pigeon = new PigeonWrapper(PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
@@ -75,11 +76,11 @@ public class Drive extends SubsystemBase {
     }
 
     public Rotation2d getRotation() {
-        return Rotation2d.fromDegrees(pigeon_v2.getHeading());
+        return Rotation2d.fromDegrees(pigeon.getHeading());
     }
 
     public void resetHeading() {
-        pigeon_v2.setHeading(0);
+        pigeon.setHeading(0);
     }
 
     public void drive(ChassisSpeeds demand) {
