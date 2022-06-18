@@ -47,10 +47,10 @@ public final class Constants {
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(200.0335693359375);
-    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(10.546875);
-    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(78.92578125);
-    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(18.71795654296875);
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(194.842529296875);
+    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(349.4476318359375);
+    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(78.7445068359375);
+    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(36.639404296875);
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
