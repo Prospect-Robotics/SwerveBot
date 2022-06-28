@@ -1,8 +1,10 @@
 package com.team2813.frc.subsystems;
 
+import com.ctre.phoenix.sensors.Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
+import com.team2813.lib.imu.Pigeon2Wrapper;
 import com.team2813.lib.imu.PigeonWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -34,7 +36,7 @@ public class Drive extends SubsystemBase {
             new Translation2d(-TRACKWIDTH / 2, -WHEELBASE / 2)
     );
 
-    private final PigeonWrapper pigeon = new PigeonWrapper(PIGEON_ID);
+    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
@@ -85,6 +87,8 @@ public class Drive extends SubsystemBase {
                 BACK_RIGHT_ENCODER_ID,
                 BACK_RIGHT_STEER_OFFSET
         );
+
+        pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
     }
 
     public Rotation2d getRotation() {
