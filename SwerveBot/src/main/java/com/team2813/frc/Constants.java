@@ -5,6 +5,7 @@
 
 package com.team2813.frc;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -54,4 +55,5 @@ public final class Constants {
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
+    public static final double WHEEL_CIRCUMFERENCE = SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
 }

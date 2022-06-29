@@ -5,7 +5,6 @@ import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.team2813.lib.imu.Pigeon2Wrapper;
-import com.team2813.lib.imu.PigeonWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -22,7 +21,7 @@ public class Drive extends SubsystemBase {
 
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-            SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI; // m/s
+            WHEEL_CIRCUMFERENCE; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
