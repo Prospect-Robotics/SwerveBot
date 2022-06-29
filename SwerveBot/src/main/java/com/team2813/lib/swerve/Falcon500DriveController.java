@@ -6,20 +6,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ctre.CtreUtils;
-import com.team2813.frc.util.Units2813;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public class Falcon500DriveController implements DriveController {
     private final TalonFX motor;
     private final double sensorVelocityCoefficient;
-    private final ModuleConfiguration moduleConfiguration;
 
     private SimpleMotorFeedforward feedforward;
 
 
     public Falcon500DriveController(int id, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
-        this.moduleConfiguration = moduleConfiguration;
-
         TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
         double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / 2048;
@@ -52,8 +48,6 @@ public class Falcon500DriveController implements DriveController {
      *               or a CANivore device name or serial number
      */
     public Falcon500DriveController(int id, String canbus, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
-        this.moduleConfiguration = moduleConfiguration;
-
         TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
         double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / 2048;
@@ -81,7 +75,7 @@ public class Falcon500DriveController implements DriveController {
     }
 
     @Override
-    public Falcon500DriveController withPidConstants(double proportional, double integral, double derivative) {
+    public DriveController withPidConstants(double proportional, double integral, double derivative) {
         motor.config_kP(0, proportional);
         motor.config_kI(0, integral);
         motor.config_kD(0, derivative);
@@ -90,7 +84,7 @@ public class Falcon500DriveController implements DriveController {
     }
 
     @Override
-    public Falcon500DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
+    public DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
         this.feedforward = feedforward;
         return this;
     }
@@ -103,10 +97,7 @@ public class Falcon500DriveController implements DriveController {
     // velocity in m/s
     @Override
     public void setReferenceVelocity(double velocity) {
-        final double WHEEL_CIRCUMFERENCE = moduleConfiguration.getWheelDiameter() * Math.PI;
-
-        double velocityRawUnits = Units2813.wheelSpeedToMotorRpm(velocity, WHEEL_CIRCUMFERENCE, moduleConfiguration.getDriveReduction()); // convert from wheel speed (m/s) to motor velocity (rpm)
-        velocityRawUnits = Units2813.motorRevsToTicks(velocityRawUnits / 60 / 10, 2048); // convert from rpm to ticks/100ms
+        double velocityRawUnits = velocity / sensorVelocityCoefficient; // convert from m/s to ticks/100ms
 
         if (hasFeedForward()) {
             motor.set(TalonFXControlMode.Velocity, velocityRawUnits, DemandType.ArbitraryFeedForward, feedforward.calculate(velocity));
