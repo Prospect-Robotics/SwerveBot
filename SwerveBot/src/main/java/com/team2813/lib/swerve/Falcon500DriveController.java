@@ -9,7 +9,7 @@ import com.swervedrivespecialties.swervelib.ctre.CtreUtils;
 import com.team2813.frc.util.Units2813;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
-public class Falcon500DriveController {
+public class Falcon500DriveController implements DriveController {
     private final TalonFX motor;
     private final double sensorVelocityCoefficient;
     private final ModuleConfiguration moduleConfiguration;
@@ -80,21 +80,28 @@ public class Falcon500DriveController {
         );
     }
 
-    public void withPidConstants(double proportional, double integral, double derivative) {
+    @Override
+    public Falcon500DriveController withPidConstants(double proportional, double integral, double derivative) {
         motor.config_kP(0, proportional);
         motor.config_kI(0, integral);
         motor.config_kD(0, derivative);
+
+        return this;
     }
 
-    public void withFeedforward(SimpleMotorFeedforward feedforward) {
+    @Override
+    public Falcon500DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
         this.feedforward = feedforward;
+        return this;
     }
 
+    @Override
     public boolean hasFeedForward() {
         return feedforward != null;
     }
 
     // velocity in m/s
+    @Override
     public void setReferenceVelocity(double velocity) {
         final double WHEEL_CIRCUMFERENCE = moduleConfiguration.getWheelDiameter() * Math.PI;
 
@@ -109,6 +116,7 @@ public class Falcon500DriveController {
         }
     }
 
+    @Override
     public double getStateVelocity() {
         return motor.getSelectedSensorVelocity() * sensorVelocityCoefficient;
     }
