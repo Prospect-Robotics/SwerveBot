@@ -1,4 +1,4 @@
-package com.team2813.lib.swerve;
+package com.team2813.lib.swerve.controllers;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
