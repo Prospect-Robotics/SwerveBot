@@ -38,7 +38,7 @@ public class NeoDriveController implements DriveController {
     }
 
     @Override
-    public DriveController withPidConstants(double proportional, double integral, double derivative) {
+    public NeoDriveController withPidConstants(double proportional, double integral, double derivative) {
         pidController.setP(proportional);
         pidController.setI(integral);
         pidController.setD(derivative);
@@ -47,7 +47,7 @@ public class NeoDriveController implements DriveController {
     }
 
     @Override
-    public DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
+    public NeoDriveController withFeedforward(SimpleMotorFeedforward feedforward) {
         this.feedforward = feedforward;
         return this;
     }

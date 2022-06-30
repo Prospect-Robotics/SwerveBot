@@ -42,40 +42,8 @@ public class Falcon500DriveController implements DriveController {
         );
     }
 
-    /**
-     * Constructor
-     * @param canbus Name of the CANbus; can be a SocketCAN interface (on Linux),
-     *               or a CANivore device name or serial number
-     */
-    public Falcon500DriveController(int id, String canbus, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
-        TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
-
-        double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / 2048;
-        sensorVelocityCoefficient = sensorPositionCoefficient * 10;
-
-        motorConfiguration.voltageCompSaturation = mk4Configuration.getNominalVoltage();
-
-        motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getDriveCurrentLimit();
-        motorConfiguration.supplyCurrLimit.enable = true;
-
-        motor = new TalonFX(id, canbus);
-        CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration), "Failed to configure Falcon 500");
-
-        motor.enableVoltageCompensation(true);
-
-        motor.setNeutralMode(NeutralMode.Brake);
-
-        motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
-        motor.setSensorPhase(true);
-
-        CtreUtils.checkCtreError(
-                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 250, 250),
-                "Failed to configure Falcon status frame period"
-        );
-    }
-
     @Override
-    public DriveController withPidConstants(double proportional, double integral, double derivative) {
+    public Falcon500DriveController withPidConstants(double proportional, double integral, double derivative) {
         motor.config_kP(0, proportional);
         motor.config_kI(0, integral);
         motor.config_kD(0, derivative);
@@ -84,7 +52,7 @@ public class Falcon500DriveController implements DriveController {
     }
 
     @Override
-    public DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
+    public Falcon500DriveController withFeedforward(SimpleMotorFeedforward feedforward) {
         this.feedforward = feedforward;
         return this;
     }

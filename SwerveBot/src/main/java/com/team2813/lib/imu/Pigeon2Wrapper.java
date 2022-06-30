@@ -27,7 +27,7 @@ public class Pigeon2Wrapper extends Pigeon2 {
         super(deviceNumber);
 
         configAllSettings(new Pigeon2Configuration());
-        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 10);
+        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20);
     }
 
     public double getHeading() {
