@@ -1,7 +1,6 @@
 package com.team2813.lib.swerve.controllers;
 
 import com.swervedrivespecialties.swervelib.SteerController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveModule {
     private final DriveController driveController;
@@ -51,16 +50,5 @@ public class SwerveModule {
 
         driveController.setReferenceVelocity(driveVelocity);
         steerController.setReferenceAngle(steerAngle);
-
-        SmartDashboard.putNumber("Target Velocity", driveVelocity);
-
-        double currentVelocity = getDriveVelocity();
-        int targetVelocitySign = (int) (Math.abs(driveVelocity) / driveVelocity);
-        int currentVelocitySign = (int) (Math.abs(currentVelocity) / currentVelocity);
-
-        if (targetVelocitySign != currentVelocitySign) {
-            currentVelocity *= -1;
-        }
-        SmartDashboard.putNumber("Current Velocity", currentVelocity);
     }
 }

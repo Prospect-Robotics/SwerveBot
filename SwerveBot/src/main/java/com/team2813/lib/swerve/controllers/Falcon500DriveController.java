@@ -37,7 +37,7 @@ public class Falcon500DriveController implements DriveController {
         motor.setSensorPhase(true);
 
         CtreUtils.checkCtreError(
-                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 250, 250),
+                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250),
                 "Failed to configure Falcon status frame period"
         );
     }
