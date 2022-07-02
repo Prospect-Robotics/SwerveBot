@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.frc.Constants.*;
@@ -26,7 +27,7 @@ public class Drive extends SubsystemBase {
             WHEEL_CIRCUMFERENCE; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
 
-    private final double kP = 0.40565;
+    private final double kP = 0.45;
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.59869, 0.050736, 0.0021331);
@@ -134,5 +135,8 @@ public class Drive extends SubsystemBase {
         frontRightModule.set(states[1].speedMetersPerSecond, states[1].angle.getRadians());
         backLeftModule.set(states[2].speedMetersPerSecond, states[2].angle.getRadians());
         backRightModule.set(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+
+        SmartDashboard.putNumber("Current Velocity", frontLeftModule.getDriveVelocity());
+
     }
 }
