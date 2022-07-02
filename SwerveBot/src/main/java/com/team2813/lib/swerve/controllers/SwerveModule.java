@@ -49,8 +49,18 @@ public class SwerveModule {
             steerAngle += 2.0 * Math.PI;
         }
 
-        SmartDashboard.putNumber("Target Velocity", driveVelocity);
         driveController.setReferenceVelocity(driveVelocity);
         steerController.setReferenceAngle(steerAngle);
+
+        SmartDashboard.putNumber("Target Velocity", driveVelocity);
+
+        double currentVelocity = getDriveVelocity();
+        int targetVelocitySign = (int) (Math.abs(driveVelocity) / driveVelocity);
+        int currentVelocitySign = (int) (Math.abs(currentVelocity) / currentVelocity);
+
+        if (targetVelocitySign != currentVelocitySign) {
+            currentVelocity *= -1;
+        }
+        SmartDashboard.putNumber("Current Velocity", currentVelocity);
     }
 }

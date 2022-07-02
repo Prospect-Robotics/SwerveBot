@@ -29,7 +29,7 @@ public class Drive extends SubsystemBase {
 
     private final double kP = 0.45;
     private final double kI = 0.0;
-    private final double kD = 0.0;
+    private final double kD = 0.25;
     private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.59869, 0.050736, 0.0021331);
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -135,8 +135,6 @@ public class Drive extends SubsystemBase {
         frontRightModule.set(states[1].speedMetersPerSecond, states[1].angle.getRadians());
         backLeftModule.set(states[2].speedMetersPerSecond, states[2].angle.getRadians());
         backRightModule.set(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-
-        SmartDashboard.putNumber("Current Velocity", frontLeftModule.getDriveVelocity());
 
     }
 }
