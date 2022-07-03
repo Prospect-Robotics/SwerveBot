@@ -108,6 +108,7 @@ public class Pigeon2Wrapper extends Pigeon2 {
                 super.configMountPose(forward, up);
             }
 
+            setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 10);
             setHeading(currentHeading);
         }
     }
