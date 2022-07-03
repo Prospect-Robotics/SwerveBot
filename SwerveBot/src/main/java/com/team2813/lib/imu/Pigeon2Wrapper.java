@@ -1,17 +1,10 @@
 package com.team2813.lib.imu;
 
-import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2Configuration;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 
 public class Pigeon2Wrapper extends Pigeon2 {
-    private AxisDirection forward;
-    private AxisDirection up;
-
-    private double initYaw = 0;
-    private double initPitch = 0;
-    private double initRoll = 0;
 
     private double currentHeading = 0;
 
