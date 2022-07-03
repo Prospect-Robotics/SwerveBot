@@ -60,13 +60,11 @@ public class NeoDriveController implements DriveController {
     // velocity in m/s
     @Override
     public void setReferenceVelocity(double velocity) {
-        double velocityRPM = velocity / velocityConversionFactor; // convert from m/s to rpm
-
         if (hasFeedForward()) {
-            pidController.setReference(velocityRPM, CANSparkMax.ControlType.kVelocity, 0, feedforward.calculate(velocity));
+            pidController.setReference(velocity, CANSparkMax.ControlType.kVelocity, 0, feedforward.calculate(velocity));
         }
         else {
-            pidController.setReference(velocityRPM, CANSparkMax.ControlType.kVelocity);
+            pidController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
         }
     }
 
