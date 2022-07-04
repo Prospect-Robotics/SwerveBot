@@ -10,7 +10,6 @@ public class NeoDriveController implements DriveController {
     private final CANSparkMax motor;
     private final RelativeEncoder encoder;
     private final SparkMaxPIDController pidController;
-    private final double velocityConversionFactor;
 
     private SimpleMotorFeedforward feedforward;
 
@@ -30,9 +29,8 @@ public class NeoDriveController implements DriveController {
 
         encoder = motor.getEncoder();
         double positionConversionFactor = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction();
-        velocityConversionFactor = positionConversionFactor / 60;
         encoder.setPositionConversionFactor(positionConversionFactor);
-        encoder.setVelocityConversionFactor(velocityConversionFactor);
+        encoder.setVelocityConversionFactor(positionConversionFactor / 60);
 
         pidController = motor.getPIDController();
     }
