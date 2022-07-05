@@ -43,6 +43,10 @@ public class Pigeon2Wrapper extends Pigeon2 {
         currentHeading = angle;
     }
 
+    /**
+     * Checks if a reset has occurred and restores non-persistent settings if so.
+     * Implement periodically (e.g. in a subsystem's periodic() method)
+     */
     public void periodicResetCheck() {
         if (!hasResetOccurred()) {
             currentHeading = getHeading();
