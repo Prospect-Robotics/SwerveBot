@@ -70,4 +70,9 @@ public class NeoDriveController implements DriveController {
     public double getStateVelocity() {
         return encoder.getVelocity();
     }
+
+    @Override
+    public void resetEncoder() {
+        encoder.setPosition(0);
+    }
 }

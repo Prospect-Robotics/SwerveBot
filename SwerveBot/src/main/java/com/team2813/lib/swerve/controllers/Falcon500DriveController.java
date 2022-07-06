@@ -79,4 +79,9 @@ public class Falcon500DriveController implements DriveController {
     public double getStateVelocity() {
         return motor.getSelectedSensorVelocity() * sensorVelocityCoefficient;
     }
+
+    @Override
+    public void resetEncoder() {
+        motor.setSelectedSensorPosition(0);
+    }
 }

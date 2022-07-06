@@ -9,4 +9,6 @@ public interface DriveController {
 
     public void setReferenceVelocity(double velocity);
     public double getStateVelocity();
+
+    public void resetEncoder();
 }

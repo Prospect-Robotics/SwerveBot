@@ -1,6 +1,8 @@
 package com.team2813.lib.swerve.controllers;
 
 import com.swervedrivespecialties.swervelib.SteerController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveModule {
     private final DriveController driveController;
@@ -50,5 +52,13 @@ public class SwerveModule {
 
         driveController.setReferenceVelocity(driveVelocity);
         steerController.setReferenceAngle(steerAngle);
+    }
+
+    public void resetDriveEncoder() {
+        driveController.resetEncoder();
+    }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getSteerAngle()));
     }
 }
