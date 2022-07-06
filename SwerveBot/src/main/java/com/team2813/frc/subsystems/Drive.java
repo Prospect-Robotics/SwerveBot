@@ -7,10 +7,12 @@ import com.team2813.lib.imu.Pigeon2Wrapper;
 import com.team2813.lib.swerve.helpers.Mk4SwerveModuleHelper;
 import com.team2813.lib.swerve.controllers.SwerveModule;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -41,6 +43,8 @@ public class Drive extends SubsystemBase {
             // Back Right
             new Translation2d(-TRACKWIDTH / 2, -WHEELBASE / 2)
     );
+
+    private SwerveDriveOdometry odometry;
 
     private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID);
 
@@ -117,17 +121,32 @@ public class Drive extends SubsystemBase {
         return Rotation2d.fromDegrees(pigeon.getHeading());
     }
 
-    public void resetHeading() {
-        pigeon.setHeading(0);
-    }
-
     public void drive(ChassisSpeeds demand) {
         chassisSpeedDemand = demand;
+    }
+
+    public void initAutonomous(Pose2d initialPose) {
+        frontLeftModule.resetDriveEncoder();
+        frontRightModule.resetDriveEncoder();
+        backLeftModule.resetDriveEncoder();
+        backRightModule.resetDriveEncoder();
+
+        pigeon.setHeading(initialPose.getRotation().getDegrees());
+
+        odometry = new SwerveDriveOdometry(kinematics, getRotation(), initialPose);
     }
 
     @Override
     public void periodic() {
         pigeon.periodicResetCheck();
+
+//        odometry.update(
+//                getRotation(),
+//                frontLeftModule.getState(),
+//                frontRightModule.getState(),
+//                backLeftModule.getState(),
+//                backRightModule.getState()
+//        );
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeedDemand);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY);
