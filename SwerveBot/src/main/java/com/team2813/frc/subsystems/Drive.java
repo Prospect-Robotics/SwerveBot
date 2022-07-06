@@ -3,6 +3,7 @@ package com.team2813.frc.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+import com.team2813.frc.Robot;
 import com.team2813.lib.imu.Pigeon2Wrapper;
 import com.team2813.lib.swerve.helpers.Mk4SwerveModuleHelper;
 import com.team2813.lib.swerve.controllers.SwerveModule;
@@ -33,7 +34,7 @@ public class Drive extends SubsystemBase {
     private final double kD = 0;
     private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.59869, 0.050736, 0.0021331);
 
-    private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+    public final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             // Front Left
             new Translation2d(TRACKWIDTH / 2, WHEELBASE / 2),
             // Front Right
@@ -54,6 +55,7 @@ public class Drive extends SubsystemBase {
     private final SwerveModule backRightModule;
 
     private ChassisSpeeds chassisSpeedDemand = new ChassisSpeeds(0, 0, 0);
+    private SwerveModuleState[] states = new SwerveModuleState[4];
 
     public Drive() {
         ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
@@ -121,8 +123,16 @@ public class Drive extends SubsystemBase {
         return Rotation2d.fromDegrees(pigeon.getHeading());
     }
 
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
     public void drive(ChassisSpeeds demand) {
         chassisSpeedDemand = demand;
+    }
+
+    public void drive(SwerveModuleState[] demandStates) {
+        states = demandStates;
     }
 
     public void initAutonomous(Pose2d initialPose) {
@@ -148,7 +158,7 @@ public class Drive extends SubsystemBase {
 //                backRightModule.getState()
 //        );
 
-        SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeedDemand);
+        if (!Robot.isAuto) states = kinematics.toSwerveModuleStates(chassisSpeedDemand);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY);
 
         frontLeftModule.set(states[0].speedMetersPerSecond, states[0].angle.getRadians());

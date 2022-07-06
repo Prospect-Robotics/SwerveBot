@@ -9,10 +9,12 @@ import com.team2813.frc.commands.DefaultDriveCommand;
 import com.team2813.frc.commands.ExampleCommand;
 import com.team2813.frc.subsystems.Drive;
 import com.team2813.frc.subsystems.ExampleSubsystem;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import java.util.function.Consumer;
 
 
 /**
@@ -67,7 +69,14 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        // An ExampleCommand will run in autonomous
+        // Use in FollowCommands
+        Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
+            @Override
+            public void accept(SwerveModuleState[] swerveModuleStates) {
+                drive.drive(swerveModuleStates);
+            }
+        };
+
         return autoCommand;
     }
 
