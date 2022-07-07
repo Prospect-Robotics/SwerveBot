@@ -95,7 +95,7 @@ public class RobotContainer
     }
 
     private static double modifyAxis(double value) {
-        value = deadband(value, 0.05);
+        value = deadband(value, 0.1);
         value = Math.copySign(value * value, value);
         return value;
     }
