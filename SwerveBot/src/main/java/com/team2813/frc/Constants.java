@@ -48,12 +48,12 @@ public final class Constants {
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(70.400390625);
-    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(332.75390625);
-    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(78.57421875);
-    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(10.546875);
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(70.751953125);
+    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(333.80859375);
+    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(80.33203125);
+    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(11.513671875);
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
-    public static final double WHEEL_CIRCUMFERENCE = SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
+    public static final double WHEEL_CIRCUMFERENCE = SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI; // meters
 }
