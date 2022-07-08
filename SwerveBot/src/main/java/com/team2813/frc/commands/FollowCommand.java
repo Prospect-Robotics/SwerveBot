@@ -12,9 +12,9 @@ import java.util.function.Consumer;
 
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static PIDController xController = new PIDController(0, 0, 0);
-    private static PIDController yController = new PIDController(0, 0, 0);
-    private static ProfiledPIDController thetaController = new ProfiledPIDController(
+    private static final PIDController xController = new PIDController(0, 0, 0);
+    private static final PIDController yController = new PIDController(0, 0, 0);
+    private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             0,
             0,
             0,
@@ -25,7 +25,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
         super(
                 trajectory,
                 driveSubsystem::getPose,
-                driveSubsystem.kinematics,
+                driveSubsystem.getKinematics(),
                 xController,
                 yController,
                 thetaController,

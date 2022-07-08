@@ -34,7 +34,7 @@ public class Drive extends SubsystemBase {
     private final double kD = 0;
     private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.59869, 0.050736, 0.0021331);
 
-    public final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+    private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             // Front Left
             new Translation2d(TRACKWIDTH / 2, WHEELBASE / 2),
             // Front Right
@@ -117,6 +117,10 @@ public class Drive extends SubsystemBase {
         );
 
         pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
+    }
+
+    public SwerveDriveKinematics getKinematics() {
+        return kinematics;
     }
 
     public Rotation2d getRotation() {
