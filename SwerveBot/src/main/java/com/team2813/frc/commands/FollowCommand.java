@@ -10,6 +10,9 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import java.util.function.Consumer;
 
+/**
+ * Command to follow a given trajectory
+ */
 public class FollowCommand extends PPSwerveControllerCommand {
 
     private static final PIDController xController = new PIDController(0, 0, 0);

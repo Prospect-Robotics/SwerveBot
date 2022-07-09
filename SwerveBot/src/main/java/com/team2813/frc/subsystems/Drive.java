@@ -169,6 +169,5 @@ public class Drive extends SubsystemBase {
         frontRightModule.set(states[1].speedMetersPerSecond, states[1].angle.getRadians());
         backLeftModule.set(states[2].speedMetersPerSecond, states[2].angle.getRadians());
         backRightModule.set(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-
     }
 }
