@@ -5,10 +5,11 @@
 
 package com.team2813.frc;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team2813.frc.commands.DefaultDriveCommand;
-import com.team2813.frc.commands.ExampleCommand;
+import com.team2813.frc.commands.FollowCommand;
 import com.team2813.frc.subsystems.Drive;
-import com.team2813.frc.subsystems.ExampleSubsystem;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -26,13 +27,9 @@ import java.util.function.Consumer;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     private final Drive drive = new Drive();
 
     private final XboxController controller = new XboxController(0);
-    
-    private final ExampleCommand autoCommand = new ExampleCommand(exampleSubsystem);
-    
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
@@ -69,7 +66,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        // Use in FollowCommands
+        // Use in FollowCommands and RotateCommands
         Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
             @Override
             public void accept(SwerveModuleState[] swerveModuleStates) {
@@ -77,7 +74,9 @@ public class RobotContainer
             }
         };
 
-        return autoCommand;
+        PathPlannerTrajectory straightTestTrajectory = PathPlanner.loadPath("Straight_Test", 0.75, 2);
+
+        return new FollowCommand(straightTestTrajectory, outputModuleStates, drive);
     }
 
     private static double deadband(double value, double deadband) {
