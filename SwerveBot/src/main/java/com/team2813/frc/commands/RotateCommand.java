@@ -59,7 +59,7 @@ public class RotateCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= 0.035;
+        return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= Math.toRadians(5);
     }
 
     @Override
