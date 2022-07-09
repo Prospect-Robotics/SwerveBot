@@ -75,6 +75,7 @@ public class RobotContainer
         };
 
         PathPlannerTrajectory straightTestTrajectory = PathPlanner.loadPath("Straight_Test", 0.75, 2);
+        drive.initAutonomous(straightTestTrajectory.getInitialPose());
 
         return new FollowCommand(straightTestTrajectory, outputModuleStates, drive);
     }
