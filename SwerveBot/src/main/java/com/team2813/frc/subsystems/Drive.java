@@ -154,13 +154,15 @@ public class Drive extends SubsystemBase {
     public void periodic() {
         pigeon.periodicResetCheck();
 
-        odometry.update(
-                getRotation(),
-                frontLeftModule.getState(),
-                frontRightModule.getState(),
-                backLeftModule.getState(),
-                backRightModule.getState()
-        );
+        if (Robot.isAuto) {
+            odometry.update(
+                    getRotation(),
+                    frontLeftModule.getState(),
+                    frontRightModule.getState(),
+                    backLeftModule.getState(),
+                    backRightModule.getState()
+            );
+        }
 
         if (!Robot.isAuto) states = kinematics.toSwerveModuleStates(chassisSpeedDemand);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY);
