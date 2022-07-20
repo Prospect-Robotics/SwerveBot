@@ -34,6 +34,8 @@ public class RobotContainer
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
+        Autonomous.addSubsystems(drive);
+
         drive.setDefaultCommand(new DefaultDriveCommand(
                 drive,
                 () -> -modifyAxis(controller.getLeftY()) * Drive.MAX_VELOCITY,
@@ -66,18 +68,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        // Use in FollowCommands and RotateCommands
-        Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
-            @Override
-            public void accept(SwerveModuleState[] swerveModuleStates) {
-                drive.drive(swerveModuleStates);
-            }
-        };
-
-        PathPlannerTrajectory straightTestTrajectory = PathPlanner.loadPath("Straight_Test", 0.75, 2);
-        drive.initAutonomous(straightTestTrajectory.getInitialPose());
-
-        return new FollowCommand("Straight_Test", outputModuleStates, drive);
+        return Autonomous.getAutoCommand();
     }
 
     private static double deadband(double value, double deadband) {

@@ -3,6 +3,7 @@ package com.team2813.frc.commands;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.team2813.frc.Autonomous;
 import com.team2813.frc.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -29,7 +30,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
 
     public FollowCommand(String trajectoryName, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
-                PathPlanner.loadPath(trajectoryName, 0.75, 2),
+                PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL),
                 driveSubsystem::getPose,
                 driveSubsystem.getKinematics(),
                 xController,
@@ -44,7 +45,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
 
     public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
-                PathPlanner.loadPath(trajectoryName, 0.75, 2, reversed),
+                PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL, reversed),
                 driveSubsystem::getPose,
                 driveSubsystem.getKinematics(),
                 xController,
