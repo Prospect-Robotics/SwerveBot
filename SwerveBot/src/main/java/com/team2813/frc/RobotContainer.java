@@ -77,7 +77,7 @@ public class RobotContainer
         PathPlannerTrajectory straightTestTrajectory = PathPlanner.loadPath("Straight_Test", 0.75, 2);
         drive.initAutonomous(straightTestTrajectory.getInitialPose());
 
-        return new FollowCommand(straightTestTrajectory, outputModuleStates, drive);
+        return new FollowCommand("Straight_Test", outputModuleStates, drive);
     }
 
     private static double deadband(double value, double deadband) {

@@ -1,5 +1,6 @@
 package com.team2813.frc.commands;
 
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.team2813.frc.subsystems.Drive;
@@ -24,9 +25,11 @@ public class FollowCommand extends PPSwerveControllerCommand {
             new TrapezoidProfile.Constraints(0, 0)
     );
 
-    public FollowCommand(PathPlannerTrajectory trajectory, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
+    private final PathPlannerTrajectory trajectory;
+
+    public FollowCommand(String trajectoryName, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
-                trajectory,
+                PathPlanner.loadPath(trajectoryName, 0.75, 2),
                 driveSubsystem::getPose,
                 driveSubsystem.getKinematics(),
                 xController,
@@ -35,5 +38,26 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 outputModuleStates,
                 driveSubsystem
         );
+
+        trajectory = PathPlanner.loadPath(trajectoryName, 0.75, 2);
+    }
+
+    public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
+        super(
+                PathPlanner.loadPath(trajectoryName, 0.75, 2, reversed),
+                driveSubsystem::getPose,
+                driveSubsystem.getKinematics(),
+                xController,
+                yController,
+                thetaController,
+                outputModuleStates,
+                driveSubsystem
+        );
+
+        trajectory = PathPlanner.loadPath(trajectoryName, 0.75, 2, reversed);
+    }
+
+    public PathPlannerTrajectory getTrajectory() {
+        return trajectory;
     }
 }
