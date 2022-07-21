@@ -19,7 +19,7 @@ public class Autonomous {
     public static final double MAX_ACCEL = 2; // m/s
 
     // Use in FollowCommands and RotateCommands
-    private static final Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
+    public static final Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
         @Override
         public void accept(SwerveModuleState[] swerveModuleStates) {
             driveSubsystem.drive(swerveModuleStates);
@@ -35,16 +35,24 @@ public class Autonomous {
 
     public static Command getAutoCommand() {
         AutoRoutine routine = ShuffleboardData.routineChooser.getSelected();
-        return routine.command;
+        return routine.getCommand();
     }
 
     public static void addRoutines() {
-        for (AutoRoutine routine : AutoRoutine.values()) {
-            ShuffleboardData.routineChooser.addOption(routine.name, routine);
-        }
+//        try {
+//            for (AutoRoutine routine : AutoRoutine.values()) {
+//                //ShuffleboardData.routineChooser.addOption(routine.name, routine);
+//            }
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Hi, Autonomous values");
+//        System.out.printf("Autonomous values %s\n", Arrays.toString(AutoRoutine.values()));
+        //System.out.println("Autonomous values" + AutoRoutine.class);
     }
 
-    private static Drive getDriveSubsystem() {
+    public static Drive getDriveSubsystem() {
         Drive driveSubsystem = null;
         for (Subsystem subsystem : allSubsystems) {
             if (subsystem instanceof Drive) {
@@ -55,17 +63,17 @@ public class Autonomous {
         return driveSubsystem;
     }
 
-    public enum AutoRoutine {
-
-        STRAIGHT_TEST("Straight Test", new AutoRoutineCommand(
-                driveSubsystem, new FollowCommand("Straight_Test", outputModuleStates, driveSubsystem)));
-
-        private final String name;
-        private final Command command;
-
-        AutoRoutine(String name, Command command) {
-            this.name = name;
-            this.command = command;
-        }
-    }
+//    public enum AutoRoutine {
+//
+//        STRAIGHT_TEST("Straight Test", new AutoRoutineCommand(
+//                driveSubsystem, new FollowCommand("Straight_Test", outputModuleStates, driveSubsystem)));
+//
+//        private final String name;
+//        private final Command command;
+//
+//        AutoRoutine(String name, Command command) {
+//            this.name = name;
+//            this.command = command;
+//        }
+//    }
 }

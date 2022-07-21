@@ -1,6 +1,6 @@
 package com.team2813.frc.util;
 
-import com.team2813.frc.Autonomous.AutoRoutine;
+import com.team2813.frc.AutoRoutine;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

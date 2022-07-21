@@ -47,7 +47,7 @@ public class AutoRoutineCommand extends SequentialCommandGroup {
                 driveSubsystem.initAutonomous(firstFollowCommand.getTrajectory().getInitialPose());
             }
             else {
-                throw new NullPointerException();
+                System.out.println("No follow commands");
             }
         }
     }

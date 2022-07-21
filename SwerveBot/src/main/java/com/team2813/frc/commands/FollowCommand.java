@@ -17,13 +17,13 @@ import java.util.function.Consumer;
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(0, 0, 0);
-    private static final PIDController yController = new PIDController(0, 0, 0);
+    private static final PIDController xController = new PIDController(2.0, 0.01, 0);
+    private static final PIDController yController = new PIDController(2.0, 0.01, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
+            4.5,
             0,
             0,
-            0,
-            new TrapezoidProfile.Constraints(0, 0)
+            new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
 
     private final PathPlannerTrajectory trajectory;
@@ -40,7 +40,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 driveSubsystem
         );
 
-        trajectory = PathPlanner.loadPath(trajectoryName, 0.75, 2);
+        trajectory = PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL);
     }
 
     public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
@@ -55,7 +55,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 driveSubsystem
         );
 
-        trajectory = PathPlanner.loadPath(trajectoryName, 0.75, 2, reversed);
+        trajectory = PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL, reversed);
     }
 
     public PathPlannerTrajectory getTrajectory() {
