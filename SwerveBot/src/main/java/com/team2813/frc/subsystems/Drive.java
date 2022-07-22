@@ -151,6 +151,7 @@ public class Drive extends SubsystemBase {
         odometry = new SwerveDriveOdometry(kinematics, getRotation(), initialPose);
     }
 
+    // Not needed if doing west coast drive
     public void initAutonomous(Rotation2d initialRotation) {
         pigeon.setHeading(initialRotation.getDegrees());
     }
