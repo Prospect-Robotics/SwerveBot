@@ -12,6 +12,7 @@ public class AutoRoutineCommand extends SequentialCommandGroup {
 
     private Pose2d initialPose;
 
+    // Use if first Command that makes robot move is a FollowCommand
     public AutoRoutineCommand(Drive driveSubsystem, Command... commands) {
         super(commands);
 
@@ -19,6 +20,7 @@ public class AutoRoutineCommand extends SequentialCommandGroup {
         this.commands = commands;
     }
 
+    // If the first Command that makes the robot move is not a FollowCommand or if there are no FollowCommands, use this
     public AutoRoutineCommand(Drive driveSubsystem, Pose2d initialPose, Command... commands) {
         super(commands);
 
@@ -35,19 +37,12 @@ public class AutoRoutineCommand extends SequentialCommandGroup {
             driveSubsystem.initAutonomous(initialPose);
         }
         else {
-            FollowCommand firstFollowCommand = null;
             for (Command command : commands) {
                 if (command instanceof FollowCommand) {
-                    firstFollowCommand = (FollowCommand) command;
-                    break;
+                    FollowCommand firstFollowCommand = (FollowCommand) command;
+                    driveSubsystem.initAutonomous(firstFollowCommand.getTrajectory().getInitialPose());
+                    return;
                 }
-            }
-
-            if (firstFollowCommand != null) {
-                driveSubsystem.initAutonomous(firstFollowCommand.getTrajectory().getInitialPose());
-            }
-            else {
-                System.out.println("No follow commands");
             }
         }
     }
