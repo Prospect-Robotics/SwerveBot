@@ -1,27 +1,16 @@
 package com.team2813.frc;
 
-import com.team2813.frc.commands.AutoRoutineCommand;
+import com.team2813.frc.commands.AutoInitDriveCommand;
 import com.team2813.frc.commands.FollowCommand;
-import com.team2813.frc.subsystems.Drive;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.function.Consumer;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public enum AutoRoutine {
-    STRAIGHT_TEST("Straight Test", new AutoRoutineCommand(
-            Autonomous.getDriveSubsystem(), new FollowCommand("Straight_Test", Autonomous.outputModuleStates,
-            Autonomous.getDriveSubsystem())));
 
-    // Use in FollowCommands and RotateCommands
-    private static final Consumer<SwerveModuleState[]> outputModuleStates = new Consumer<SwerveModuleState[]>() {
-        @Override
-        public void accept(SwerveModuleState[] swerveModuleStates) {
-            Autonomous.getDriveSubsystem().drive(swerveModuleStates);
-        }
-    };
-
-    static Drive driveSubsystem = Autonomous.getDriveSubsystem();
+    STRAIGHT_TEST("Straight Test", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Straight_Test", Autonomous.getDriveSubsystem()),
+            new FollowCommand("Straight_Test", Autonomous.outputModuleStates, Autonomous.getDriveSubsystem())
+    ));
 
     private final String name;
     private final Command command;

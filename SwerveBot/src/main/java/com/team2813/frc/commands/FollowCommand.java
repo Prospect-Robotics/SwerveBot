@@ -1,7 +1,6 @@
 package com.team2813.frc.commands;
 
 import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.team2813.frc.Autonomous;
 import com.team2813.frc.subsystems.Drive;
@@ -26,8 +25,6 @@ public class FollowCommand extends PPSwerveControllerCommand {
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
 
-    private final PathPlannerTrajectory trajectory;
-
     public FollowCommand(String trajectoryName, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
                 PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL),
@@ -39,8 +36,6 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 outputModuleStates,
                 driveSubsystem
         );
-
-        trajectory = PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL);
     }
 
     public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
@@ -54,11 +49,5 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 outputModuleStates,
                 driveSubsystem
         );
-
-        trajectory = PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL, reversed);
-    }
-
-    public PathPlannerTrajectory getTrajectory() {
-        return trajectory;
     }
 }

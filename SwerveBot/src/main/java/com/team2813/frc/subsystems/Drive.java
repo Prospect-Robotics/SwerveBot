@@ -151,11 +151,15 @@ public class Drive extends SubsystemBase {
         odometry = new SwerveDriveOdometry(kinematics, getRotation(), initialPose);
     }
 
+    public void initAutonomous(Rotation2d initialRotation) {
+        pigeon.setHeading(initialRotation.getDegrees());
+    }
+
     @Override
     public void periodic() {
         pigeon.periodicResetCheck();
 
-        if (Robot.isAuto) {
+        if (odometry != null) {
             odometry.update(
                     getRotation(),
                     frontLeftModule.getState(),
