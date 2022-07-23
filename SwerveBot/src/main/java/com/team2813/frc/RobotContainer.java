@@ -5,11 +5,9 @@
 
 package com.team2813.frc;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team2813.frc.commands.DefaultDriveCommand;
-import com.team2813.frc.commands.FollowCommand;
 import com.team2813.frc.subsystems.Drive;
+import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -30,12 +28,18 @@ public class RobotContainer
     private final Drive drive = new Drive();
 
     private final XboxController controller = new XboxController(0);
+
+    // Use in FollowCommands and RotateCommands
+    public final Consumer<SwerveModuleState[]> SWERVE_STATE_CONSUMER = new Consumer<SwerveModuleState[]>() {
+        @Override
+        public void accept(SwerveModuleState[] swerveModuleStates) {
+            drive.drive(swerveModuleStates);
+        }
+    };
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
-        Autonomous.addSubsystems(drive);
-
         drive.setDefaultCommand(new DefaultDriveCommand(
                 drive,
                 () -> -modifyAxis(controller.getLeftY()) * Drive.MAX_VELOCITY,
@@ -45,6 +49,11 @@ public class RobotContainer
 
         // Configure the button bindings
         configureButtonBindings();
+    }
+
+    // Package-private subsystem getters
+    Drive getDrive() {
+        return drive;
     }
     
     
@@ -68,7 +77,14 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return Autonomous.getAutoCommand();
+        AutoRoutine selectedRoutine = ShuffleboardData.routineChooser.getSelected();
+        return selectedRoutine.getCommand();
+    }
+
+    public void addAutoRoutines() {
+        for (AutoRoutine routine : AutoRoutine.values()) {
+            ShuffleboardData.routineChooser.addOption(routine.getName(), routine);
+        }
     }
 
     private static double deadband(double value, double deadband) {

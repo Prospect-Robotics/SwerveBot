@@ -2,7 +2,6 @@ package com.team2813.frc.commands;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import com.team2813.frc.Autonomous;
 import com.team2813.frc.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -10,6 +9,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import java.util.function.Consumer;
+
+import static com.team2813.frc.Constants.*;
 
 /**
  * Command to follow a given trajectory
@@ -27,7 +28,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
 
     public FollowCommand(String trajectoryName, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
-                PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL),
+                PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL),
                 driveSubsystem::getPose,
                 driveSubsystem.getKinematics(),
                 xController,
@@ -40,7 +41,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
 
     public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
         super(
-                PathPlanner.loadPath(trajectoryName, Autonomous.MAX_VEL, Autonomous.MAX_ACCEL, reversed),
+                PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed),
                 driveSubsystem::getPose,
                 driveSubsystem.getKinematics(),
                 xController,

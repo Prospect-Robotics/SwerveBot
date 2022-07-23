@@ -56,4 +56,8 @@ public final class Constants {
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
     public static final double WHEEL_CIRCUMFERENCE = SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI; // meters
+
+    // Auto Constants
+    public static final double AUTO_MAX_VEL = 0.75; // m/s
+    public static final double AUTO_MAX_ACCEL = 2; // m/s
 }

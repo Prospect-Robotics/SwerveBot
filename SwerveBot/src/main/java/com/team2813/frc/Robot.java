@@ -22,7 +22,7 @@ public class Robot extends TimedRobot
 {
     private Command autonomousCommand;
     
-    private RobotContainer robotContainer;
+    public static RobotContainer ROBOT_CONTAINER;
 
     public static boolean isAuto = false;
     
@@ -36,7 +36,10 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        robotContainer = new RobotContainer();
+        ROBOT_CONTAINER = new RobotContainer();
+
+        ShuffleboardData.init();
+        ROBOT_CONTAINER.addAutoRoutines();
     }
     
     
@@ -50,9 +53,6 @@ public class Robot extends TimedRobot
     @Override
     public void robotPeriodic()
     {
-        ShuffleboardData.init();
-        Autonomous.addRoutines();
-
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
         isAuto = true;
-        autonomousCommand = robotContainer.getAutonomousCommand();
+        autonomousCommand = ROBOT_CONTAINER.getAutonomousCommand();
         
         // schedule the autonomous command (example)
         if (autonomousCommand != null)
