@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.frc.Constants.*;
@@ -168,6 +169,8 @@ public class Drive extends SubsystemBase {
                     backLeftModule.getState(),
                     backRightModule.getState()
             );
+
+            SmartDashboard.putString("Current Pose", odometry.getPoseMeters().toString());
         }
 
         if (!Robot.isAuto) states = kinematics.toSwerveModuleStates(chassisSpeedDemand);
