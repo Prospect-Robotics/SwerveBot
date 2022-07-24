@@ -10,7 +10,15 @@ public enum AutoRoutine {
 
     STRAIGHT_TEST("Straight Test", new SequentialCommandGroup(
             new AutoInitDriveCommand("Straight_Test", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Straight_Test", ROBOT_CONTAINER.SWERVE_STATE_CONSUMER, ROBOT_CONTAINER.getDrive())
+            new FollowCommand("Straight_Test", ROBOT_CONTAINER.getDrive())
+    )),
+    TEST_1("Test 1", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Test_Path_1", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Test_Path_1", ROBOT_CONTAINER.getDrive())
+    )),
+    TEST_2("Test 2", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Test_Path_2", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Test_Path_2", ROBOT_CONTAINER.getDrive())
     ));
 
     private final String name;

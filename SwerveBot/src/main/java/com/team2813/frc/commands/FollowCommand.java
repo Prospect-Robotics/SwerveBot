@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.function.Consumer;
 
 import static com.team2813.frc.Constants.*;
+import static com.team2813.frc.Robot.ROBOT_CONTAINER;
 
 /**
  * Command to follow a given trajectory
@@ -29,10 +30,10 @@ public class FollowCommand extends PPSwerveControllerCommand {
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
 
-    private final Consumer<SwerveModuleState[]> outputModuleStates;
     private final Drive driveSubsystem;
+    private final PathPlannerTrajectory trajectory;
 
-    public FollowCommand(String trajectoryName, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
+    public FollowCommand(String trajectoryName, Drive driveSubsystem) {
         super(
                 PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL),
                 driveSubsystem::getPose,
@@ -40,18 +41,15 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 xController,
                 yController,
                 thetaController,
-                outputModuleStates,
+                ROBOT_CONTAINER.SWERVE_STATE_CONSUMER,
                 driveSubsystem
         );
 
-        this.outputModuleStates = outputModuleStates;
         this.driveSubsystem = driveSubsystem;
-
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL);
-        SmartDashboard.putString("Goal Pose", trajectory.getEndState().poseMeters.toString());
+        trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL);
     }
 
-    public FollowCommand(String trajectoryName, boolean reversed, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
+    public FollowCommand(String trajectoryName, boolean reversed, Drive driveSubsystem) {
         super(
                 PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed),
                 driveSubsystem::getPose,
@@ -59,14 +57,17 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 xController,
                 yController,
                 thetaController,
-                outputModuleStates,
+                ROBOT_CONTAINER.SWERVE_STATE_CONSUMER,
                 driveSubsystem
         );
 
-        this.outputModuleStates = outputModuleStates;
         this.driveSubsystem = driveSubsystem;
+        trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed);
+    }
 
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed);
+    @Override
+    public void initialize() {
+        super.initialize();
         SmartDashboard.putString("Goal Pose", trajectory.getEndState().poseMeters.toString());
     }
 
@@ -77,6 +78,6 @@ public class FollowCommand extends PPSwerveControllerCommand {
         ChassisSpeeds targetChassisSpeeds = new ChassisSpeeds(0, 0, 0);
         SwerveModuleState[] targetModuleStates = driveSubsystem.getKinematics().toSwerveModuleStates(targetChassisSpeeds);
 
-        outputModuleStates.accept(targetModuleStates);
+        ROBOT_CONTAINER.SWERVE_STATE_CONSUMER.accept(targetModuleStates);
     }
 }
