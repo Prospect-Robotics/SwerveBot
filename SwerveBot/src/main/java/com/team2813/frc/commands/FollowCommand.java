@@ -11,8 +11,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.util.function.Consumer;
-
 import static com.team2813.frc.Constants.*;
 import static com.team2813.frc.Robot.ROBOT_CONTAINER;
 
@@ -21,14 +19,15 @@ import static com.team2813.frc.Robot.ROBOT_CONTAINER;
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(2.0, 0.01, 0);
-    private static final PIDController yController = new PIDController(2.0, 0.01, 0);
+    private static final PIDController xController = new PIDController(2.5, 0, 0);
+    private static final PIDController yController = new PIDController(2.5, 0, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
-            4.5,
+            0,
             0,
             0,
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
+    // P: 4.5
 
     private final Drive driveSubsystem;
     private final PathPlannerTrajectory trajectory;

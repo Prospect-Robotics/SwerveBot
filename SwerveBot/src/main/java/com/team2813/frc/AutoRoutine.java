@@ -12,13 +12,13 @@ public enum AutoRoutine {
             new AutoInitDriveCommand("Straight_Test", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Straight_Test", ROBOT_CONTAINER.getDrive())
     )),
-    TEST_1("Test 1", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Test_Path_1", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Test_Path_1", ROBOT_CONTAINER.getDrive())
+    ADVANCED_TEST_1("Advanced Test 1", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive())
     )),
-    TEST_2("Test 2", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Test_Path_2", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Test_Path_2", ROBOT_CONTAINER.getDrive())
+    ADVANCED_TEST_2("Advanced Test 2", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive())
     ));
 
     private final String name;
