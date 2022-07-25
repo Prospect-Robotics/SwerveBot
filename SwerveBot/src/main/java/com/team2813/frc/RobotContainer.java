@@ -28,14 +28,6 @@ public class RobotContainer
     private final Drive drive = new Drive();
 
     private final XboxController controller = new XboxController(0);
-
-    // Use in FollowCommands and RotateCommands
-    public final Consumer<SwerveModuleState[]> SWERVE_STATE_CONSUMER = new Consumer<SwerveModuleState[]>() {
-        @Override
-        public void accept(SwerveModuleState[] swerveModuleStates) {
-            drive.drive(swerveModuleStates);
-        }
-    };
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()

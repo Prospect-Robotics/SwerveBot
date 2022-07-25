@@ -11,6 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.function.Consumer;
+
 import static com.team2813.frc.Constants.*;
 import static com.team2813.frc.Robot.ROBOT_CONTAINER;
 
@@ -30,6 +32,7 @@ public class FollowCommand extends PPSwerveControllerCommand {
     // P: 4.5
 
     private final Drive driveSubsystem;
+    private final Consumer<SwerveModuleState[]> swerveModuleStatesConsumer;
     private final PathPlannerTrajectory trajectory;
 
     public FollowCommand(String trajectoryName, Drive driveSubsystem) {
@@ -40,11 +43,13 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 xController,
                 yController,
                 thetaController,
-                ROBOT_CONTAINER.SWERVE_STATE_CONSUMER,
+                getSwerveModuleStatesConsumer(driveSubsystem),
                 driveSubsystem
         );
 
         this.driveSubsystem = driveSubsystem;
+        swerveModuleStatesConsumer = getSwerveModuleStatesConsumer(driveSubsystem);
+
         trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL);
     }
 
@@ -56,12 +61,23 @@ public class FollowCommand extends PPSwerveControllerCommand {
                 xController,
                 yController,
                 thetaController,
-                ROBOT_CONTAINER.SWERVE_STATE_CONSUMER,
+                getSwerveModuleStatesConsumer(driveSubsystem),
                 driveSubsystem
         );
 
         this.driveSubsystem = driveSubsystem;
+        swerveModuleStatesConsumer = getSwerveModuleStatesConsumer(driveSubsystem);
+
         trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed);
+    }
+
+    private static Consumer<SwerveModuleState[]> getSwerveModuleStatesConsumer(Drive driveSubsystem) {
+        return new Consumer<SwerveModuleState[]>() {
+            @Override
+            public void accept(SwerveModuleState[] swerveModuleStates) {
+                driveSubsystem.drive(swerveModuleStates);
+            }
+        };
     }
 
     @Override
@@ -77,6 +93,6 @@ public class FollowCommand extends PPSwerveControllerCommand {
         ChassisSpeeds targetChassisSpeeds = new ChassisSpeeds(0, 0, 0);
         SwerveModuleState[] targetModuleStates = driveSubsystem.getKinematics().toSwerveModuleStates(targetChassisSpeeds);
 
-        ROBOT_CONTAINER.SWERVE_STATE_CONSUMER.accept(targetModuleStates);
+        swerveModuleStatesConsumer.accept(targetModuleStates);
     }
 }
