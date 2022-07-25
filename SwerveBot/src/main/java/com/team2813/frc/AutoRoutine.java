@@ -12,6 +12,10 @@ public enum AutoRoutine {
             new AutoInitDriveCommand("Straight_Test", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Straight_Test", ROBOT_CONTAINER.getDrive())
     )),
+    STRAFE_TEST("Strafe Test", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Strafe_Test", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Strafe_Test", ROBOT_CONTAINER.getDrive())
+    )),
     ADVANCED_TEST_1("Advanced Test 1", new SequentialCommandGroup(
             new AutoInitDriveCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive())
