@@ -14,15 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.function.Consumer;
 
 import static com.team2813.frc.Constants.*;
-import static com.team2813.frc.Robot.ROBOT_CONTAINER;
 
 /**
  * Command to follow a given trajectory
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(2.5, 0, 0);
-    private static final PIDController yController = new PIDController(2.5, 0, 0);
+    private static final PIDController xController = new PIDController(2.25, 0.1, 0);
+    private static final PIDController yController = new PIDController(2.25, 0.1, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             0,
             0,

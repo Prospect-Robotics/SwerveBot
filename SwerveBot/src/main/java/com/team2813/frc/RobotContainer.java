@@ -8,13 +8,9 @@ package com.team2813.frc;
 import com.team2813.frc.commands.DefaultDriveCommand;
 import com.team2813.frc.subsystems.Drive;
 import com.team2813.frc.util.ShuffleboardData;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.function.Consumer;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
