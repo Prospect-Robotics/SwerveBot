@@ -18,14 +18,14 @@ public class AutoInitDriveCommand extends InstantCommand {
     public AutoInitDriveCommand(String trajectoryName, Drive driveSubsystem) {
         super(() -> {
                     PathPlannerTrajectory trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL);
-                    driveSubsystem.initAutonomous(trajectory.getInitialPose());
+                    driveSubsystem.initAutonomous(trajectory.getInitialState());
                 }, driveSubsystem);
     }
 
     public AutoInitDriveCommand(String trajectoryName, boolean reversed, Drive driveSubsystem) {
         super(() -> {
                     PathPlannerTrajectory trajectory = PathPlanner.loadPath(trajectoryName, AUTO_MAX_VEL, AUTO_MAX_ACCEL, reversed);
-                    driveSubsystem.initAutonomous(trajectory.getInitialPose());
+                    driveSubsystem.initAutonomous(trajectory.getInitialState());
                 }, driveSubsystem);
     }
 

@@ -1,6 +1,8 @@
 package com.team2813.frc.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.team2813.frc.Robot;
@@ -141,18 +143,18 @@ public class Drive extends SubsystemBase {
         states = demandStates;
     }
 
-    public void initAutonomous(Pose2d initialPose) {
+    public void initAutonomous(PathPlannerState initialState) {
         frontLeftModule.resetDriveEncoder();
         frontRightModule.resetDriveEncoder();
         backLeftModule.resetDriveEncoder();
         backRightModule.resetDriveEncoder();
 
-        pigeon.setHeading(initialPose.getRotation().getDegrees());
+        pigeon.setHeading(initialState.holonomicRotation.getDegrees());
 
-        odometry = new SwerveDriveOdometry(kinematics, getRotation(), initialPose);
+        Pose2d initialPose = new Pose2d(initialState.poseMeters.getTranslation(), initialState.holonomicRotation);
+        odometry = new SwerveDriveOdometry(kinematics, initialState.holonomicRotation, initialPose);
     }
 
-    // Not needed if doing west coast drive
     public void initAutonomous(Rotation2d initialRotation) {
         pigeon.setHeading(initialRotation.getDegrees());
     }
@@ -160,6 +162,7 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         pigeon.periodicResetCheck();
+        SmartDashboard.putNumber("Current Heading (degrees)", pigeon.getHeading());
 
         if (odometry != null) {
             odometry.update(

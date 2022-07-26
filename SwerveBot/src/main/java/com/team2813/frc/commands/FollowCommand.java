@@ -2,10 +2,12 @@ package com.team2813.frc.commands;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.team2813.frc.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -82,7 +84,10 @@ public class FollowCommand extends PPSwerveControllerCommand {
     @Override
     public void initialize() {
         super.initialize();
-        SmartDashboard.putString("Goal Pose", trajectory.getEndState().poseMeters.toString());
+
+        PathPlannerState goalState = trajectory.getEndState();
+        Pose2d goalPose = new Pose2d(goalState.poseMeters.getTranslation(), goalState.holonomicRotation);
+        SmartDashboard.putString("Goal Pose", goalPose.toString());
     }
 
     @Override
