@@ -22,8 +22,8 @@ import static com.team2813.frc.Constants.*;
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(2.25, 0.1, 0);
-    private static final PIDController yController = new PIDController(2.25, 0.1, 0);
+    private static final PIDController xController = new PIDController(0.5, 0, 0);
+    private static final PIDController yController = new PIDController(1, 0, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             0,
             0,
