@@ -22,7 +22,7 @@ import static com.team2813.frc.Constants.*;
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(0.5, 0, 0);
+    private static final PIDController xController = new PIDController(1.25, 0.15, 0);
     private static final PIDController yController = new PIDController(1, 0, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             0,
