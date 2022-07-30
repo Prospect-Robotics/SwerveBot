@@ -18,28 +18,38 @@ import java.util.function.Consumer;
 public class RotateCommand extends CommandBase {
 
     private final Drive driveSubsystem;
-    private final Consumer<SwerveModuleState[]> outputModuleStates;
+    private final Consumer<SwerveModuleState[]> swerveModuleStatesConsumer;
     private final ProfiledPIDController thetaController;
 
     private final double degreesToRotateBy;
     private final double setpoint;
 
-    public RotateCommand(double degreesToRotateBy, Consumer<SwerveModuleState[]> outputModuleStates, Drive driveSubsystem) {
+    public RotateCommand(double degreesToRotateBy, Drive driveSubsystem) {
         this.degreesToRotateBy = degreesToRotateBy;
-        this.outputModuleStates = outputModuleStates;
         this.driveSubsystem = driveSubsystem;
 
         setpoint = driveSubsystem.getRotation().getRadians() + Math.toRadians(degreesToRotateBy);
+
+        swerveModuleStatesConsumer = getSwerveModuleStatesConsumer(driveSubsystem);
 
         // parameters taken from the thetaController in FollowCommand.java
         thetaController = new ProfiledPIDController(
                 0,
                 0,
                 0,
-                new TrapezoidProfile.Constraints(0, 0)
+                new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
         );
 
         addRequirements(driveSubsystem);
+    }
+
+    private static Consumer<SwerveModuleState[]> getSwerveModuleStatesConsumer(Drive driveSubsystem) {
+        return new Consumer<SwerveModuleState[]>() {
+            @Override
+            public void accept(SwerveModuleState[] swerveModuleStates) {
+                driveSubsystem.drive(swerveModuleStates);
+            }
+        };
     }
 
     @Override
@@ -54,7 +64,7 @@ public class RotateCommand extends CommandBase {
                 0, 0, angularVelocity, driveSubsystem.getRotation());
         SwerveModuleState[] targetModuleStates = driveSubsystem.getKinematics().toSwerveModuleStates(targetChassisSpeeds);
 
-        outputModuleStates.accept(targetModuleStates);
+        swerveModuleStatesConsumer.accept(targetModuleStates);
     }
 
     @Override
@@ -67,6 +77,6 @@ public class RotateCommand extends CommandBase {
         ChassisSpeeds targetChassisSpeeds = new ChassisSpeeds(0, 0, 0);
         SwerveModuleState[] targetModuleStates = driveSubsystem.getKinematics().toSwerveModuleStates(targetChassisSpeeds);
 
-        outputModuleStates.accept(targetModuleStates);
+        swerveModuleStatesConsumer.accept(targetModuleStates);
     }
 }

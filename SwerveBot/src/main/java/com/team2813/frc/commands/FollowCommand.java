@@ -30,7 +30,6 @@ public class FollowCommand extends PPSwerveControllerCommand {
             0,
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
-    // P: 4.5
 
     private final Drive driveSubsystem;
     private final Consumer<SwerveModuleState[]> swerveModuleStatesConsumer;

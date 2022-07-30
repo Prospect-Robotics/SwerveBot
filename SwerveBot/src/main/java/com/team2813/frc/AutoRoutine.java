@@ -2,6 +2,8 @@ package com.team2813.frc;
 
 import com.team2813.frc.commands.AutoInitDriveCommand;
 import com.team2813.frc.commands.FollowCommand;
+import com.team2813.frc.commands.RotateCommand;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -15,6 +17,14 @@ public enum AutoRoutine {
     STRAFE_TEST("Strafe Test", new SequentialCommandGroup(
             new AutoInitDriveCommand("Strafe_Test", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Strafe_Test", ROBOT_CONTAINER.getDrive())
+    )),
+    ROTATE_90_TEST("Rotate 90 Test", new SequentialCommandGroup(
+            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
+            new RotateCommand(90, ROBOT_CONTAINER.getDrive())
+    )),
+    ROTATE_180_Test("Rotate 180 Test", new SequentialCommandGroup(
+            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
+            new RotateCommand(180, ROBOT_CONTAINER.getDrive())
     )),
     ADVANCED_TEST_1("Advanced Test 1", new SequentialCommandGroup(
             new AutoInitDriveCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive()),
