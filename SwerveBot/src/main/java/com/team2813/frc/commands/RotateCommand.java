@@ -19,27 +19,22 @@ public class RotateCommand extends CommandBase {
 
     private final Drive driveSubsystem;
     private final Consumer<SwerveModuleState[]> swerveModuleStatesConsumer;
-    private final ProfiledPIDController thetaController;
 
-    private final double degreesToRotateBy;
+    // parameters taken from the thetaController in FollowCommand.java
+    private static final ProfiledPIDController thetaController = new ProfiledPIDController(
+            1,
+            0,
+            0,
+            new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
+    );
+
     private final double setpoint;
 
     public RotateCommand(double degreesToRotateBy, Drive driveSubsystem) {
-        this.degreesToRotateBy = degreesToRotateBy;
         this.driveSubsystem = driveSubsystem;
 
         setpoint = driveSubsystem.getRotation().getRadians() + Math.toRadians(degreesToRotateBy);
-
         swerveModuleStatesConsumer = getSwerveModuleStatesConsumer(driveSubsystem);
-
-        // parameters taken from the thetaController in FollowCommand.java
-        thetaController = new ProfiledPIDController(
-                0,
-                0,
-                0,
-                new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
-        );
-
         addRequirements(driveSubsystem);
     }
 
@@ -69,7 +64,8 @@ public class RotateCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= Math.toRadians(5);
+        //return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= Math.toRadians(5);
+        return false;
     }
 
     @Override
