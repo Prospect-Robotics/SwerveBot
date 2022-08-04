@@ -33,6 +33,14 @@ public enum AutoRoutine {
     ADVANCED_TEST_2("Advanced Test 2", new SequentialCommandGroup(
             new AutoInitDriveCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive())
+    )),
+    ADVANCED_TEST_3("Advanced Test 3", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive())
+    )),
+    ADVANCED_TEST_4("Advanced Test 4", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive())
     ));
 
     private final String name;
