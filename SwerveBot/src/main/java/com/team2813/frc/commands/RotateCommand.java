@@ -24,7 +24,7 @@ public class RotateCommand extends CommandBase {
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             1,
             0,
-            0,
+            0.0225,
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
 
@@ -64,8 +64,7 @@ public class RotateCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        //return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= Math.toRadians(5);
-        return false;
+        return Math.abs(setpoint - driveSubsystem.getRotation().getRadians()) <= Math.toRadians(2.5);
     }
 
     @Override
