@@ -22,12 +22,12 @@ import static com.team2813.frc.Constants.*;
  */
 public class FollowCommand extends PPSwerveControllerCommand {
 
-    private static final PIDController xController = new PIDController(1.25, 0.15, 0);
-    private static final PIDController yController = new PIDController(1, 0, 0);
+    private static final PIDController xController = new PIDController(4, 0, 0);
+    private static final PIDController yController = new PIDController(2, 0, 0);
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
-            1,
+            3,
             0,
-            0.0225,
+            0,
             new TrapezoidProfile.Constraints(Drive.MAX_ANGULAR_VELOCITY, Drive.MAX_ANGULAR_ACCELERATION)
     );
 

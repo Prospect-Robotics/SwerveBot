@@ -19,8 +19,7 @@ public class RotateCommand extends CommandBase {
 
     private final Drive driveSubsystem;
     private final Consumer<SwerveModuleState[]> swerveModuleStatesConsumer;
-
-    // parameters taken from the thetaController in FollowCommand.java
+    
     private static final ProfiledPIDController thetaController = new ProfiledPIDController(
             1,
             0,

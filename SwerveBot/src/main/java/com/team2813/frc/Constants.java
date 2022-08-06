@@ -58,6 +58,6 @@ public final class Constants {
     public static final double WHEEL_CIRCUMFERENCE = SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI; // meters
 
     // Auto Constants
-    public static final double AUTO_MAX_VEL = 0.75; // m/s
-    public static final double AUTO_MAX_ACCEL = 2; // m/s
+    public static final double AUTO_MAX_VEL = 2.25; // m/s
+    public static final double AUTO_MAX_ACCEL = 6; // m/s
 }
