@@ -1,4 +1,4 @@
-package com.team2813.lib.swerve.controllers;
+package com.team2813.lib.swerve.controllers.drive;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -14,7 +14,6 @@ public class Falcon500DriveController implements DriveController {
 
     private SimpleMotorFeedforward feedforward;
 
-
     public Falcon500DriveController(int id, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
         TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
@@ -27,6 +26,33 @@ public class Falcon500DriveController implements DriveController {
         motorConfiguration.supplyCurrLimit.enable = true;
 
         motor = new TalonFX(id);
+        CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration), "Failed to configure Falcon 500");
+
+        motor.enableVoltageCompensation(true);
+
+        motor.setNeutralMode(NeutralMode.Brake);
+
+        motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
+        motor.setSensorPhase(true);
+
+        CtreUtils.checkCtreError(
+                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250),
+                "Failed to configure Falcon status frame period"
+        );
+    }
+
+    public Falcon500DriveController(int id, String canbus, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
+        TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
+
+        double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / 2048;
+        sensorVelocityCoefficient = sensorPositionCoefficient * 10;
+
+        motorConfiguration.voltageCompSaturation = mk4Configuration.getNominalVoltage();
+
+        motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getDriveCurrentLimit();
+        motorConfiguration.supplyCurrLimit.enable = true;
+
+        motor = new TalonFX(id, canbus);
         CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration), "Failed to configure Falcon 500");
 
         motor.enableVoltageCompensation(true);
