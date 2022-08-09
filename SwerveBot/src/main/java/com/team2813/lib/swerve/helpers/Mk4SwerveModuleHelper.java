@@ -13,6 +13,7 @@ import com.swervedrivespecialties.swervelib.rev.NeoSteerControllerFactoryBuilder
 import com.team2813.lib.swerve.controllers.drive.Falcon500DriveController;
 import com.team2813.lib.swerve.controllers.drive.NeoDriveController;
 import com.team2813.lib.swerve.controllers.SwerveModule;
+import com.team2813.lib.swerve.controllers.steer.Falcon500SteerController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
@@ -71,7 +72,7 @@ public class Mk4SwerveModuleHelper {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration)
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
-        container.addNumber("Current Velocity", driveController::getStateVelocity);
+        driveController.addDashboardEntries(container);
 
         SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
         SteerController steerController = steerControllerFactory.create(
@@ -82,6 +83,58 @@ public class Mk4SwerveModuleHelper {
                 ),
                 gearRatio.getConfiguration()
         );
+
+        return new SwerveModule(driveController, steerController);
+    }
+
+    /**
+     * Creates a Mk4 swerve module that uses Falcon 500s for driving and steering.
+     * Module information is displayed in the specified Shuffleboard container.
+     *
+     * @param container        The container to display module information in
+     * @param configuration    Module configuration parameters to use.
+     * @param gearRatio        The gearing configuration the module is in.
+     * @param canbus           Name of the CANbus; can be a SocketCAN interface (on Linux),
+     *      *                  or a CANivore device name or serial number.
+     * @param driveMotorPort   The CAN ID of the drive Falcon 500.
+     * @param steerMotorPort   The CAN ID of the steer Falcon 500.
+     * @param steerEncoderPort The CAN ID of the steer CANCoder.
+     * @param drive_kP         The proportional gain for the driving PID.
+     * @param drive_kI         The integral gain for the driving PID.
+     * @param drive_kD         The derivative gain for the driving PID.
+     * @param driveFeedforward Object to calculate feedforward added to driving PID.
+     * @param steerOffset      The offset of the CANCoder in radians.
+     * @return The configured swerve module.
+     */
+    public static SwerveModule createFalcon500(
+            ShuffleboardLayout container,
+            Mk4ModuleConfiguration configuration,
+            GearRatio gearRatio,
+            String canbus,
+            int driveMotorPort,
+            int steerMotorPort,
+            int steerEncoderPort,
+            double drive_kP,
+            double drive_kI,
+            double drive_kD,
+            SimpleMotorFeedforward driveFeedforward,
+            double steerOffset
+    ) {
+        Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, canbus, gearRatio.getConfiguration(), configuration)
+                .withPidConstants(drive_kP, drive_kI, drive_kD)
+                .withFeedforward(driveFeedforward);
+        driveController.addDashboardEntries(container);
+
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
+                        steerMotorPort,
+                        canbus,
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                ),
+                gearRatio.getConfiguration(),
+                configuration
+        );
+        steerController.addDashboardEntries(container);
 
         return new SwerveModule(driveController, steerController);
     }
@@ -118,6 +171,53 @@ public class Mk4SwerveModuleHelper {
                 container,
                 new Mk4ModuleConfiguration(),
                 gearRatio,
+                driveMotorPort,
+                steerMotorPort,
+                steerEncoderPort,
+                drive_kP,
+                drive_kI,
+                drive_kD,
+                driveFeedforward,
+                steerOffset
+        );
+    }
+
+    /**
+     * Creates a Mk4 swerve module that uses Falcon 500s for driving and steering.
+     * Module information is displayed in the specified Shuffleboard container.
+     *
+     * @param container        The container to display module information in
+     * @param gearRatio        The gearing configuration the module is in.
+     * @param canbus           Name of the CANbus; can be a SocketCAN interface (on Linux),
+     *      *                  or a CANivore device name or serial number.
+     * @param driveMotorPort   The CAN ID of the drive Falcon 500.
+     * @param steerMotorPort   The CAN ID of the steer Falcon 500.
+     * @param steerEncoderPort The CAN ID of the steer CANCoder.
+     * @param drive_kP         The proportional gain for the driving PID.
+     * @param drive_kI         The integral gain for the driving PID.
+     * @param drive_kD         The derivative gain for the driving PID.
+     * @param driveFeedforward Object to calculate feedforward added to driving PID.
+     * @param steerOffset      The offset of the CANCoder in radians.
+     * @return The configured swerve module.
+     */
+    public static SwerveModule createFalcon500(
+            ShuffleboardLayout container,
+            GearRatio gearRatio,
+            String canbus,
+            int driveMotorPort,
+            int steerMotorPort,
+            int steerEncoderPort,
+            double drive_kP,
+            double drive_kI,
+            double drive_kD,
+            SimpleMotorFeedforward driveFeedforward,
+            double steerOffset
+    ) {
+        return createFalcon500(
+                container,
+                new Mk4ModuleConfiguration(),
+                gearRatio,
+                canbus,
                 driveMotorPort,
                 steerMotorPort,
                 steerEncoderPort,
@@ -175,6 +275,53 @@ public class Mk4SwerveModuleHelper {
     /**
      * Creates a Mk4 swerve module that uses Falcon 500s for driving and steering.
      *
+     * @param configuration    Module configuration parameters to use.
+     * @param gearRatio        The gearing configuration the module is in.
+     * @param canbus           Name of the CANbus; can be a SocketCAN interface (on Linux),
+     *      *                  or a CANivore device name or serial number.
+     * @param driveMotorPort   The CAN ID of the drive Falcon 500.
+     * @param steerMotorPort   The CAN ID of the steer Falcon 500.
+     * @param steerEncoderPort The CAN ID of the steer CANCoder.
+     * @param drive_kP         The proportional gain for the driving PID.
+     * @param drive_kI         The integral gain for the driving PID.
+     * @param drive_kD         The derivative gain for the driving PID.
+     * @param driveFeedforward Object to calculate feedforward added to driving PID.
+     * @param steerOffset      The offset of the CANCoder in radians.
+     * @return The configured swerve module.
+     */
+    public static SwerveModule createFalcon500(
+            Mk4ModuleConfiguration configuration,
+            GearRatio gearRatio,
+            String canbus,
+            int driveMotorPort,
+            int steerMotorPort,
+            int steerEncoderPort,
+            double drive_kP,
+            double drive_kI,
+            double drive_kD,
+            SimpleMotorFeedforward driveFeedforward,
+            double steerOffset
+    ) {
+        Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, canbus, gearRatio.getConfiguration(), configuration)
+                .withPidConstants(drive_kP, drive_kI, drive_kD)
+                .withFeedforward(driveFeedforward);
+
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
+                        steerMotorPort,
+                        canbus,
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                ),
+                gearRatio.getConfiguration(),
+                configuration
+        );
+
+        return new SwerveModule(driveController, steerController);
+    }
+
+    /**
+     * Creates a Mk4 swerve module that uses Falcon 500s for driving and steering.
+     *
      * @param gearRatio        The gearing configuration the module is in.
      * @param driveMotorPort   The CAN ID of the drive Falcon 500.
      * @param steerMotorPort   The CAN ID of the steer Falcon 500.
@@ -200,6 +347,49 @@ public class Mk4SwerveModuleHelper {
         return createFalcon500(
                 new Mk4ModuleConfiguration(),
                 gearRatio,
+                driveMotorPort,
+                steerMotorPort,
+                steerEncoderPort,
+                drive_kP,
+                drive_kI,
+                drive_kD,
+                driveFeedforward,
+                steerOffset
+        );
+    }
+
+    /**
+     * Creates a Mk4 swerve module that uses Falcon 500s for driving and steering.
+     *
+     * @param gearRatio        The gearing configuration the module is in.
+     * @param canbus           Name of the CANbus; can be a SocketCAN interface (on Linux),
+     *      *                  or a CANivore device name or serial number.
+     * @param driveMotorPort   The CAN ID of the drive Falcon 500.
+     * @param steerMotorPort   The CAN ID of the steer Falcon 500.
+     * @param steerEncoderPort The CAN ID of the steer CANCoder.
+     * @param drive_kP         The proportional gain for the driving PID.
+     * @param drive_kI         The integral gain for the driving PID.
+     * @param drive_kD         The derivative gain for the driving PID.
+     * @param driveFeedforward Object to calculate feedforward added to driving PID.
+     * @param steerOffset      The offset of the CANCoder in radians.
+     * @return The configured swerve module.
+     */
+    public static SwerveModule createFalcon500(
+            GearRatio gearRatio,
+            String canbus,
+            int driveMotorPort,
+            int steerMotorPort,
+            int steerEncoderPort,
+            double drive_kP,
+            double drive_kI,
+            double drive_kD,
+            SimpleMotorFeedforward driveFeedforward,
+            double steerOffset
+    ) {
+        return createFalcon500(
+                new Mk4ModuleConfiguration(),
+                gearRatio,
+                canbus,
                 driveMotorPort,
                 steerMotorPort,
                 steerEncoderPort,
@@ -244,7 +434,7 @@ public class Mk4SwerveModuleHelper {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration)
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
-        container.addNumber("Current Velocity", driveController::getStateVelocity);
+        driveController.addDashboardEntries(container);
 
         SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
         SteerController steerController = steerControllerFactory.create(
@@ -417,7 +607,7 @@ public class Mk4SwerveModuleHelper {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration)
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
-        container.addNumber("Current Velocity", driveController::getStateVelocity);
+        driveController.addDashboardEntries(container);
 
         SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
         SteerController steerController = steerControllerFactory.create(
@@ -590,7 +780,7 @@ public class Mk4SwerveModuleHelper {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration)
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
-        container.addNumber("Current Velocity", driveController::getStateVelocity);
+        driveController.addDashboardEntries(container);
 
         SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
         SteerController steerController = steerControllerFactory.create(

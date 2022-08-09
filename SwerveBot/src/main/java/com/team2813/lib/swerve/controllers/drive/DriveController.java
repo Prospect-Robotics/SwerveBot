@@ -1,6 +1,7 @@
 package com.team2813.lib.swerve.controllers.drive;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 public interface DriveController {
     public DriveController withPidConstants(double proportional, double integral, double derivative);
@@ -11,4 +12,8 @@ public interface DriveController {
     public double getStateVelocity();
 
     public void resetEncoder();
+
+    default void addDashboardEntries(ShuffleboardContainer container) {
+        container.addNumber("Current Velocity", this::getStateVelocity);
+    }
 }

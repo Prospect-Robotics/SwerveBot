@@ -12,6 +12,7 @@ import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.SteerController;
 import com.swervedrivespecialties.swervelib.ctre.CanCoderAbsoluteConfiguration;
 import com.swervedrivespecialties.swervelib.ctre.CtreUtils;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 public class Falcon500SteerController implements SteerController {
     private static final int ENCODER_RESET_ITERATIONS = 500;
@@ -123,5 +124,12 @@ public class Falcon500SteerController implements SteerController {
         }
 
         return motorAngleRadians;
+    }
+
+    public void addDashboardEntries(ShuffleboardContainer container) {
+        container.addNumber("Current Angle", () -> Math.toDegrees(getStateAngle()));
+        container.addNumber("Target Angle", () -> Math.toDegrees(getReferenceAngle()));
+
+        container.addNumber("Absolute Encoder Angle", () -> Math.toDegrees(absoluteEncoder.getAbsoluteAngle()));
     }
 }
