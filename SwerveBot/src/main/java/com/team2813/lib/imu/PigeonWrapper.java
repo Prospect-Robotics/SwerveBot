@@ -10,7 +10,7 @@ public class PigeonWrapper extends PigeonIMU {
         super(deviceNumber);
 
         configAllSettings(new PigeonIMUConfiguration());
-        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 10);
+        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20);
     }
 
     public double getHeading() {
