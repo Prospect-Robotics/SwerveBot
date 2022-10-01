@@ -50,7 +50,7 @@ public class Drive extends SubsystemBase {
 
     private SwerveDriveOdometry odometry;
 
-    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID);
+    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID, "swerve");
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
@@ -67,6 +67,7 @@ public class Drive extends SubsystemBase {
                 tab.getLayout("Front Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(0, 0),
                 GearRatio.L2,
+                "swerve",
                 FRONT_LEFT_DRIVE_ID,
                 FRONT_LEFT_STEER_ID,
                 FRONT_LEFT_ENCODER_ID,
@@ -81,6 +82,7 @@ public class Drive extends SubsystemBase {
                 tab.getLayout("Front Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(2, 0),
                 GearRatio.L2,
+                "swerve",
                 FRONT_RIGHT_DRIVE_ID,
                 FRONT_RIGHT_STEER_ID,
                 FRONT_RIGHT_ENCODER_ID,
@@ -95,6 +97,7 @@ public class Drive extends SubsystemBase {
                 tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(4, 0),
                 GearRatio.L2,
+                "swerve",
                 BACK_LEFT_DRIVE_ID,
                 BACK_LEFT_STEER_ID,
                 BACK_LEFT_ENCODER_ID,
@@ -109,6 +112,7 @@ public class Drive extends SubsystemBase {
                 tab.getLayout("Back Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(6, 0),
                 GearRatio.L2,
+                "swerve",
                 BACK_RIGHT_DRIVE_ID,
                 BACK_RIGHT_STEER_ID,
                 BACK_RIGHT_ENCODER_ID,
