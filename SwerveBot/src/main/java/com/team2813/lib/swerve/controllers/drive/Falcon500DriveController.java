@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
-import com.swervedrivespecialties.swervelib.ctre.CtreUtils;
+import com.team2813.lib.util.ConfigUtils;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public class Falcon500DriveController implements DriveController {
@@ -26,7 +26,7 @@ public class Falcon500DriveController implements DriveController {
         motorConfiguration.supplyCurrLimit.enable = true;
 
         motor = new TalonFX(id);
-        CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration), "Failed to configure Falcon 500");
+        ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration));
 
         motor.enableVoltageCompensation(true);
 
@@ -35,9 +35,8 @@ public class Falcon500DriveController implements DriveController {
         motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
         motor.setSensorPhase(true);
 
-        CtreUtils.checkCtreError(
-                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250),
-                "Failed to configure Falcon status frame period"
+        ConfigUtils.ctreConfig(
+                () -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250)
         );
     }
 
@@ -53,7 +52,7 @@ public class Falcon500DriveController implements DriveController {
         motorConfiguration.supplyCurrLimit.enable = true;
 
         motor = new TalonFX(id, canbus);
-        CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration), "Failed to configure Falcon 500");
+        ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration));
 
         motor.enableVoltageCompensation(true);
 
@@ -62,17 +61,16 @@ public class Falcon500DriveController implements DriveController {
         motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
         motor.setSensorPhase(true);
 
-        CtreUtils.checkCtreError(
-                motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250),
-                "Failed to configure Falcon status frame period"
+        ConfigUtils.ctreConfig(
+                () -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250)
         );
     }
 
     @Override
     public Falcon500DriveController withPidConstants(double proportional, double integral, double derivative) {
-        motor.config_kP(0, proportional);
-        motor.config_kI(0, integral);
-        motor.config_kD(0, derivative);
+        ConfigUtils.ctreConfig(() -> motor.config_kP(0, proportional));
+        ConfigUtils.ctreConfig(() -> motor.config_kI(0, integral));
+        ConfigUtils.ctreConfig(() -> motor.config_kD(0, derivative));
 
         return this;
     }

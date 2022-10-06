@@ -2,26 +2,21 @@ package com.team2813.lib.swerve.controllers.steer;
 
 import com.swervedrivespecialties.swervelib.ctre.CanCoderAbsoluteConfiguration;
 
-public class Falcon500SteerConfiguration {
-    private final int motorPort;
+public class Falcon500SteerConfiguration extends SteerConfiguration {
+
     private final String canbus;
-    private final CanCoderAbsoluteConfiguration encoderConfiguration;
 
     public Falcon500SteerConfiguration(int motorPort, String canbus, CanCoderAbsoluteConfiguration encoderConfiguration) {
-        this.motorPort = motorPort;
+        super(motorPort, encoderConfiguration);
+
         this.canbus = canbus;
-        this.encoderConfiguration = encoderConfiguration;
     }
 
-    public int getMotorPort() {
-        return motorPort;
+    public Falcon500SteerConfiguration(int motorPort, CanCoderAbsoluteConfiguration encoderConfiguration) {
+        this(motorPort, "", encoderConfiguration);
     }
 
     public String getCanbus() {
         return canbus;
-    }
-
-    public CanCoderAbsoluteConfiguration getEncoderConfiguration() {
-        return encoderConfiguration;
     }
 }

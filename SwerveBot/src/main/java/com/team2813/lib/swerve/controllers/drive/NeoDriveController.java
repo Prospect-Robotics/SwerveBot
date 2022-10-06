@@ -3,7 +3,7 @@ package com.team2813.lib.swerve.controllers.drive;
 import com.revrobotics.*;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
-import com.swervedrivespecialties.swervelib.rev.RevUtils;
+import com.team2813.lib.util.ConfigUtils;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public class NeoDriveController implements DriveController {
@@ -17,13 +17,13 @@ public class NeoDriveController implements DriveController {
         motor = new CANSparkMax(id, CANSparkMaxLowLevel.MotorType.kBrushless);
         motor.setInverted(moduleConfiguration.isDriveInverted());
 
-        RevUtils.checkNeoError(motor.enableVoltageCompensation(mk4Configuration.getNominalVoltage()), "Failed to enable voltage compensation");
+        ConfigUtils.revConfig(() -> motor.enableVoltageCompensation(mk4Configuration.getNominalVoltage()));
 
-        RevUtils.checkNeoError(motor.setSmartCurrentLimit((int) mk4Configuration.getDriveCurrentLimit()), "Failed to set current limit for NEO");
+        ConfigUtils.revConfig(() -> motor.setSmartCurrentLimit((int) mk4Configuration.getDriveCurrentLimit()));
 
-        RevUtils.checkNeoError(motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100), "Failed to set periodic status frame 0 rate");
-        RevUtils.checkNeoError(motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20), "Failed to set periodic status frame 1 rate");
-        RevUtils.checkNeoError(motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20), "Failed to set periodic status frame 2 rate");
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100));
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20));
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20));
 
         motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
@@ -37,9 +37,9 @@ public class NeoDriveController implements DriveController {
 
     @Override
     public NeoDriveController withPidConstants(double proportional, double integral, double derivative) {
-        pidController.setP(proportional);
-        pidController.setI(integral);
-        pidController.setD(derivative);
+        ConfigUtils.revConfig(() -> pidController.setP(proportional));
+        ConfigUtils.revConfig(() -> pidController.setI(integral));
+        ConfigUtils.revConfig(() -> pidController.setD(derivative));
 
         return this;
     }

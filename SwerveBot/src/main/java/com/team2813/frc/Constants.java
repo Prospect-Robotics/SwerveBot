@@ -48,7 +48,7 @@ public final class Constants {
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(171.38671875);
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(172.265625);
     public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(284.23828125);
     public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(150.908203125);
     public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(251.3671875);

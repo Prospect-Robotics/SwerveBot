@@ -14,6 +14,7 @@ import com.team2813.lib.swerve.controllers.drive.Falcon500DriveController;
 import com.team2813.lib.swerve.controllers.drive.NeoDriveController;
 import com.team2813.lib.swerve.controllers.SwerveModule;
 import com.team2813.lib.swerve.controllers.steer.Falcon500SteerController;
+import com.team2813.lib.swerve.controllers.steer.NeoSteerController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
@@ -74,15 +75,15 @@ public class Mk4SwerveModuleHelper {
                 .withFeedforward(driveFeedforward);
         driveController.addDashboardEntries(container);
 
-        SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                container,
-                new Falcon500SteerConfiguration<>(
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
+        steerController.addDashboardEntries(container);
 
         return new SwerveModule(driveController, steerController);
     }
@@ -260,13 +261,13 @@ public class Mk4SwerveModuleHelper {
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
 
-        SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                new Falcon500SteerConfiguration<>(
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
 
         return new SwerveModule(driveController, steerController);
@@ -436,15 +437,15 @@ public class Mk4SwerveModuleHelper {
                 .withFeedforward(driveFeedforward);
         driveController.addDashboardEntries(container);
 
-        SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                container,
-                new NeoSteerConfiguration<>(
+        NeoSteerController steerController = new NeoSteerController(
+                new com.team2813.lib.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
+        steerController.addDashboardEntries(container);
 
         return new SwerveModule(driveController, steerController);
     }
@@ -523,13 +524,13 @@ public class Mk4SwerveModuleHelper {
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
 
-        SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                new NeoSteerConfiguration<>(
+        NeoSteerController steerController = new NeoSteerController(
+                new com.team2813.lib.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
 
         return new SwerveModule(driveController, steerController);
@@ -609,15 +610,15 @@ public class Mk4SwerveModuleHelper {
                 .withFeedforward(driveFeedforward);
         driveController.addDashboardEntries(container);
 
-        SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                container,
-                new NeoSteerConfiguration<>(
+        NeoSteerController steerController = new NeoSteerController(
+                new com.team2813.lib.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
+        steerController.addDashboardEntries(container);
 
         return new SwerveModule(driveController, steerController);
     }
@@ -696,13 +697,13 @@ public class Mk4SwerveModuleHelper {
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
 
-        SteerControllerFactory<?, NeoSteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getNeoSteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                new NeoSteerConfiguration<>(
+        NeoSteerController steerController = new NeoSteerController(
+                new com.team2813.lib.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
 
         return new SwerveModule(driveController, steerController);
@@ -782,15 +783,15 @@ public class Mk4SwerveModuleHelper {
                 .withFeedforward(driveFeedforward);
         driveController.addDashboardEntries(container);
 
-        SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                container,
-                new Falcon500SteerConfiguration<>(
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
+        steerController.addDashboardEntries(container);
 
         return new SwerveModule(driveController, steerController);
     }
@@ -869,13 +870,13 @@ public class Mk4SwerveModuleHelper {
                 .withPidConstants(drive_kP, drive_kI, drive_kD)
                 .withFeedforward(driveFeedforward);
 
-        SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> steerControllerFactory = getFalcon500SteerFactory(configuration);
-        SteerController steerController = steerControllerFactory.create(
-                new Falcon500SteerConfiguration<>(
+        Falcon500SteerController steerController = new Falcon500SteerController(
+                new com.team2813.lib.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
                 ),
-                gearRatio.getConfiguration()
+                gearRatio.getConfiguration(),
+                configuration
         );
 
         return new SwerveModule(driveController, steerController);

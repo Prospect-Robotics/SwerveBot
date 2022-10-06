@@ -1,12 +1,14 @@
 package com.team2813.lib.swerve.controllers.steer;
 
-import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.SteerController;
@@ -14,21 +16,20 @@ import com.swervedrivespecialties.swervelib.ctre.CanCoderAbsoluteConfiguration;
 import com.team2813.lib.util.ConfigUtils;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
-public class Falcon500SteerController implements SteerController {
+public class NeoSteerController implements SteerController {
     private static final int ENCODER_RESET_ITERATIONS = 500;
     private static final double ENCODER_RESET_MAX_ANGULAR_VELOCITY = Math.toRadians(0.5);
 
-    private final TalonFX motor;
-    private final SteerEncoder absoluteEncoder;
-    private final double sensorPositionCoefficient;
-    private final double sensorVelocityCoefficient;
-    private final TalonFXControlMode controlMode = TalonFXControlMode.Position;
+    private final CANSparkMax motor;
+    private final SparkMaxPIDController controller;
+    private final RelativeEncoder motorEncoder;
+    private final AbsoluteEncoder absoluteEncoder;
 
     private double referenceAngleRadians = 0;
 
     private double resetIteration = 0;
 
-    public Falcon500SteerController(Falcon500SteerConfiguration steerConfiguration, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
+    public NeoSteerController(SteerConfiguration steerConfiguration, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4ModuleConfiguration) {
         CanCoderAbsoluteConfiguration absoluteEncoderConfig = steerConfiguration.getEncoderConfiguration();
 
         CANCoderConfiguration config = new CANCoderConfiguration();
@@ -36,40 +37,34 @@ public class Falcon500SteerController implements SteerController {
         config.magnetOffsetDegrees = Math.toDegrees(absoluteEncoderConfig.getOffset());
         config.sensorDirection = false;
 
-        CANCoder cancoder = new CANCoder(absoluteEncoderConfig.getId(), steerConfiguration.getCanbus());
+        CANCoder cancoder = new CANCoder(absoluteEncoderConfig.getId());
         ConfigUtils.ctreConfig(() -> cancoder.configAllSettings(config, 250));
 
         ConfigUtils.ctreConfig(() -> cancoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 10, 250));
 
         absoluteEncoder = new SteerEncoder(cancoder);
 
-        sensorPositionCoefficient = 2 * Math.PI / 2048 * moduleConfiguration.getSteerReduction();
-        sensorVelocityCoefficient = sensorPositionCoefficient * 10;
+        motor = new CANSparkMax(steerConfiguration.getMotorPort(), CANSparkMaxLowLevel.MotorType.kBrushless);
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100));
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20));
+        ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20));
+        ConfigUtils.revConfig(() -> motor.setIdleMode(CANSparkMax.IdleMode.kBrake));
+        motor.setInverted(!moduleConfiguration.isSteerInverted());
 
-        TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
-        motorConfiguration.slot0.kP = 0.2;
-        motorConfiguration.slot0.kD = 0.1;
+        ConfigUtils.revConfig(() -> motor.enableVoltageCompensation(mk4ModuleConfiguration.getNominalVoltage()));
 
-        motorConfiguration.voltageCompSaturation = mk4Configuration.getNominalVoltage();
+        ConfigUtils.revConfig(() -> motor.setSmartCurrentLimit((int) Math.round(mk4ModuleConfiguration.getSteerCurrentLimit())));
 
-        motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getSteerCurrentLimit();
-        motorConfiguration.supplyCurrLimit.enable = true;
+        motorEncoder = motor.getEncoder();
+        ConfigUtils.revConfig(() -> motorEncoder.setPositionConversionFactor(2.0 * Math.PI * moduleConfiguration.getSteerReduction()));
+        ConfigUtils.revConfig(() -> motorEncoder.setVelocityConversionFactor(2.0 * Math.PI * moduleConfiguration.getSteerReduction() / 60.0));
+        ConfigUtils.revConfig(() -> motorEncoder.setPosition(absoluteEncoder.getAbsoluteAngle()));
 
-        motor = new TalonFX(steerConfiguration.getMotorPort(), steerConfiguration.getCanbus());
-        ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration, 250));
+        controller = motor.getPIDController();
+        ConfigUtils.revConfig(() -> controller.setP(1));
+        ConfigUtils.revConfig(() -> controller.setD(0.1));
 
-        motor.enableVoltageCompensation(true);
-
-        ConfigUtils.ctreConfig(() -> motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 250));
-        motor.setSensorPhase(true);
-        motor.setInverted(moduleConfiguration.isSteerInverted() ? TalonFXInvertType.CounterClockwise : TalonFXInvertType.Clockwise);
-        motor.setNeutralMode(NeutralMode.Brake);
-
-        ConfigUtils.ctreConfig(() -> motor.setSelectedSensorPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient, 0, 250));
-
-        ConfigUtils.ctreConfig(() -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General,
-                250,
-                250));
+        ConfigUtils.revConfig(() -> controller.setFeedbackDevice(motorEncoder));
     }
 
     @Override
@@ -79,16 +74,16 @@ public class Falcon500SteerController implements SteerController {
 
     @Override
     public void setReferenceAngle(double referenceAngleRadians) {
-        double currentAngleRadians = motor.getSelectedSensorPosition() * sensorPositionCoefficient;
+        double currentAngleRadians = motorEncoder.getPosition();
 
-        // Reset the motor's encoder periodically when the module is not rotating.
+        // Reset the NEO's encoder periodically when the module is not rotating.
         // Sometimes (~5% of the time) when we initialize, the absolute encoder isn't fully set up, and we don't
         // end up getting a good reading. If we reset periodically this won't matter anymore.
-        if (motor.getSelectedSensorVelocity() * sensorVelocityCoefficient < ENCODER_RESET_MAX_ANGULAR_VELOCITY) {
+        if (motorEncoder.getVelocity() < ENCODER_RESET_MAX_ANGULAR_VELOCITY) {
             if (++resetIteration >= ENCODER_RESET_ITERATIONS) {
                 resetIteration = 0;
                 double absoluteAngle = absoluteEncoder.getAbsoluteAngle();
-                motor.setSelectedSensorPosition(absoluteAngle / sensorPositionCoefficient);
+                motorEncoder.setPosition(absoluteAngle);
                 currentAngleRadians = absoluteAngle;
             }
         } else {
@@ -100,7 +95,7 @@ public class Falcon500SteerController implements SteerController {
             currentAngleRadiansMod += 2.0 * Math.PI;
         }
 
-        // The reference angle has the range [0, 2pi) but the Falcon's encoder can go above that
+        // The reference angle has the range [0, 2pi) but the Neo's encoder can go above that
         double adjustedReferenceAngleRadians = referenceAngleRadians + currentAngleRadians - currentAngleRadiansMod;
         if (referenceAngleRadians - currentAngleRadiansMod > Math.PI) {
             adjustedReferenceAngleRadians -= 2.0 * Math.PI;
@@ -108,15 +103,14 @@ public class Falcon500SteerController implements SteerController {
             adjustedReferenceAngleRadians += 2.0 * Math.PI;
         }
 
-        motor.set(controlMode, adjustedReferenceAngleRadians / sensorPositionCoefficient);
-
-
         this.referenceAngleRadians = referenceAngleRadians;
+
+        controller.setReference(adjustedReferenceAngleRadians, CANSparkMax.ControlType.kPosition);
     }
 
     @Override
     public double getStateAngle() {
-        double motorAngleRadians = motor.getSelectedSensorPosition() * sensorPositionCoefficient;
+        double motorAngleRadians = motorEncoder.getPosition();
         motorAngleRadians %= 2.0 * Math.PI;
         if (motorAngleRadians < 0.0) {
             motorAngleRadians += 2.0 * Math.PI;
