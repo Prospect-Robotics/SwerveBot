@@ -7,6 +7,7 @@ import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.team2813.lib.util.ConfigUtils;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 public class Falcon500DriveController implements DriveController {
     private final TalonFX motor;
@@ -64,6 +65,9 @@ public class Falcon500DriveController implements DriveController {
         ConfigUtils.ctreConfig(
                 () -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_21_FeedbackIntegrated, 250, 250)
         );
+        ConfigUtils.ctreConfig(
+                () -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 125, 250)
+        );
     }
 
     @Override
@@ -107,5 +111,11 @@ public class Falcon500DriveController implements DriveController {
     @Override
     public void resetEncoder() {
         motor.setSelectedSensorPosition(0);
+    }
+
+    @Override
+    public void addDashboardEntries(ShuffleboardContainer container) {
+        DriveController.super.addDashboardEntries(container);
+        container.addNumber("Drive Motor Temp (degrees Celsius)", motor::getTemperature);
     }
 }

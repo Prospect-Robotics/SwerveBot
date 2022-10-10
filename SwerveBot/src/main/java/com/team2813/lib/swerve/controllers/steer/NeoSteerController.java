@@ -124,5 +124,7 @@ public class NeoSteerController implements SteerController {
         container.addNumber("Target Angle", () -> Math.toDegrees(getReferenceAngle()));
 
         container.addNumber("Absolute Encoder Angle", () -> Math.toDegrees(absoluteEncoder.getAbsoluteAngle()));
+
+        container.addNumber("Steer Motor Temp (degrees Celsius)", motor::getMotorTemperature);
     }
 }

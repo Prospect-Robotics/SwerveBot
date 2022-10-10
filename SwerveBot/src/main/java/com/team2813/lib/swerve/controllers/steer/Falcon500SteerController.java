@@ -70,6 +70,9 @@ public class Falcon500SteerController implements SteerController {
         ConfigUtils.ctreConfig(() -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General,
                 250,
                 250));
+        ConfigUtils.ctreConfig(() -> motor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat,
+                125,
+                250));
     }
 
     @Override
@@ -130,5 +133,7 @@ public class Falcon500SteerController implements SteerController {
         container.addNumber("Target Angle", () -> Math.toDegrees(getReferenceAngle()));
 
         container.addNumber("Absolute Encoder Angle", () -> Math.toDegrees(absoluteEncoder.getAbsoluteAngle()));
+
+        container.addNumber("Steer Motor Temp (degrees Celsius)", motor::getTemperature);
     }
 }

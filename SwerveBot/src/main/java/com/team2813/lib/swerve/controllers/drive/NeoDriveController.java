@@ -5,6 +5,7 @@ import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.team2813.lib.util.ConfigUtils;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 public class NeoDriveController implements DriveController {
     private final CANSparkMax motor;
@@ -74,5 +75,11 @@ public class NeoDriveController implements DriveController {
     @Override
     public void resetEncoder() {
         encoder.setPosition(0);
+    }
+
+    @Override
+    public void addDashboardEntries(ShuffleboardContainer container) {
+        DriveController.super.addDashboardEntries(container);
+        container.addNumber("Drive Motor Temp (degrees Celsius)", motor::getMotorTemperature);
     }
 }
