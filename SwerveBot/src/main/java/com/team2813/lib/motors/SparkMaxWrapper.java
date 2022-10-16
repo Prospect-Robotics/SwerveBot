@@ -3,6 +3,7 @@ package com.team2813.lib.motors;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.team2813.lib.util.ConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,10 @@ public class SparkMaxWrapper extends CANSparkMax implements Motor {
         encoder = getEncoder();
         pidController = getPIDController();
 
-        restoreFactoryDefaults();
+        ConfigUtils.revConfig(this::restoreFactoryDefaults);
 
-        enableVoltageCompensation(12);
-        setSmartCurrentLimit(40);
+        ConfigUtils.revConfig(() -> enableVoltageCompensation(12));
+        ConfigUtils.revConfig(() -> setSmartCurrentLimit(40));
         setInverted(inverted);
     }
 
@@ -60,10 +61,10 @@ public class SparkMaxWrapper extends CANSparkMax implements Motor {
 
     @Override
     public void configPIDF(int slot, double p, double i, double d, double f) {
-        pidController.setP(p, slot);
-        pidController.setI(i, slot);
-        pidController.setD(d, slot);
-        pidController.setFF(f, slot);
+        ConfigUtils.revConfig(() -> pidController.setP(p, slot));
+        ConfigUtils.revConfig(() -> pidController.setI(i, slot));
+        ConfigUtils.revConfig(() -> pidController.setD(d, slot));
+        ConfigUtils.revConfig(() -> pidController.setFF(f, slot));
     }
 
     @Override
@@ -82,9 +83,9 @@ public class SparkMaxWrapper extends CANSparkMax implements Motor {
     }
 
     public void configMotionMagic(int slot, double minVelocity, double maxVelocity, double maxAcceleration) {
-        pidController.setSmartMotionMinOutputVelocity(minVelocity, slot);
-        pidController.setSmartMotionMaxVelocity(maxVelocity, slot);
-        pidController.setSmartMotionMaxAccel(maxAcceleration, slot);
+        ConfigUtils.revConfig(() -> pidController.setSmartMotionMinOutputVelocity(minVelocity, slot));
+        ConfigUtils.revConfig(() -> pidController.setSmartMotionMaxVelocity(maxVelocity, slot));
+        ConfigUtils.revConfig(() -> pidController.setSmartMotionMaxAccel(maxAcceleration, slot));
     }
 
     public void configMotionMagic(double minVelocity, double maxVelocity, double maxAcceleration) {
@@ -98,6 +99,10 @@ public class SparkMaxWrapper extends CANSparkMax implements Motor {
     @Override
     public void configMotionMagic(double maxVelocity, double maxAcceleration) {
         configMotionMagic(0, 0, maxVelocity, maxAcceleration);
+    }
+
+    public void configPeriodicFramePeriod(PeriodicFrame frame, int periodMs) {
+        ConfigUtils.revConfig(() -> setPeriodicFramePeriod(frame, periodMs));
     }
 
     public void addFollower(int deviceId, MotorType type, boolean inverted) {

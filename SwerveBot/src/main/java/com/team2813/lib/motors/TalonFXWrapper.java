@@ -1,12 +1,10 @@
 package com.team2813.lib.motors;
 
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FollowerType;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.team2813.frc.util.Units2813;
+import com.team2813.lib.util.ConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,7 @@ public class TalonFXWrapper extends TalonFX implements Motor {
         TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
         motorConfiguration.voltageCompSaturation = 12;
         motorConfiguration.supplyCurrLimit = new SupplyCurrentLimitConfiguration(true, 40, 40, 0.25);
-        configAllSettings(motorConfiguration);
+        ConfigUtils.ctreConfig(() -> configAllSettings(motorConfiguration));
 
         enableVoltageCompensation(true);
         setInverted(invertType);
@@ -85,10 +83,10 @@ public class TalonFXWrapper extends TalonFX implements Motor {
 
     @Override
     public void configPIDF(int slot, double p, double i, double d, double f) {
-        config_kP(slot, p);
-        config_kI(slot, i);
-        config_kD(slot, d);
-        config_kF(slot, f);
+        ConfigUtils.ctreConfig(() -> config_kP(slot, p));
+        ConfigUtils.ctreConfig(() -> config_kI(slot, i));
+        ConfigUtils.ctreConfig(() -> config_kD(slot, d));
+        ConfigUtils.ctreConfig(() -> config_kF(slot, f));
     }
 
     @Override
@@ -108,8 +106,12 @@ public class TalonFXWrapper extends TalonFX implements Motor {
 
     @Override
     public void configMotionMagic(double maxVelocity, double maxAcceleration) {
-        configMotionCruiseVelocity(maxVelocity);
-        configMotionAcceleration(maxAcceleration);
+        ConfigUtils.ctreConfig(() -> configMotionCruiseVelocity(maxVelocity));
+        ConfigUtils.ctreConfig(() -> configMotionAcceleration(maxAcceleration));
+    }
+
+    public void configStatusFramePeriod(StatusFrameEnhanced frame, int periodMs) {
+        ConfigUtils.ctreConfig(() -> super.setStatusFramePeriod(frame, periodMs));
     }
 
     public void addFollower(int deviceNumber, String canbus, TalonFXInvertType invertType) {
