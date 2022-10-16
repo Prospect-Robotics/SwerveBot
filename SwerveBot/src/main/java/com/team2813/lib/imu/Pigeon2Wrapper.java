@@ -3,6 +3,7 @@ package com.team2813.lib.imu;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2Configuration;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
+import com.team2813.lib.util.ConfigUtils;
 
 public class Pigeon2Wrapper extends Pigeon2 {
 
@@ -17,8 +18,10 @@ public class Pigeon2Wrapper extends Pigeon2 {
     public Pigeon2Wrapper(int deviceNumber, String canbus) {
         super(deviceNumber, canbus);
 
-        configAllSettings(new Pigeon2Configuration());
-        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20);
+        ConfigUtils.ctreConfig(() -> configAllSettings(new Pigeon2Configuration()));
+        ConfigUtils.ctreConfig(
+                () -> setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20)
+        );
     }
 
     /**
@@ -28,8 +31,10 @@ public class Pigeon2Wrapper extends Pigeon2 {
     public Pigeon2Wrapper(int deviceNumber) {
         super(deviceNumber);
 
-        configAllSettings(new Pigeon2Configuration());
-        setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20);
+        ConfigUtils.ctreConfig(() -> configAllSettings(new Pigeon2Configuration()));
+        ConfigUtils.ctreConfig(
+                () -> setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20)
+        );
     }
 
     public double getHeading() {
@@ -52,7 +57,9 @@ public class Pigeon2Wrapper extends Pigeon2 {
             currentHeading = getHeading();
         }
         else {
-            setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20);
+            ConfigUtils.ctreConfig(
+                    () -> setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 20)
+            );
             setHeading(currentHeading);
         }
     }
