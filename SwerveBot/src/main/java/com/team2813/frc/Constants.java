@@ -45,6 +45,11 @@ public final class Constants {
 
     public static final int PIGEON_ID = 13;
 
+    // magazine
+
+    public static final int MAGAZINE_LEFT_ID = 14;
+    public static final int MAGAZINE_RIGHT_ID = 15;
+
     // Physical Drive Constants
 
     // Steer offsets
