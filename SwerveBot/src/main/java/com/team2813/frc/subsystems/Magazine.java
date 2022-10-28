@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 public class Magazine extends CommandBase {
     
-    private static double demand = 0.67;
+    private static final double DEMAND = 0.67;
     
     TalonFXWrapper mag;
 
@@ -19,10 +19,14 @@ public class Magazine extends CommandBase {
     }
 
     public void intake() {
-        mag.set(ControlMode.DUTY_CYCLE, demand);
+        mag.set(ControlMode.DUTY_CYCLE, DEMAND);
     }
 
     public void outtake() {
-        mag.set(ControlMode.DUTY_CYCLE, -demand);
+        mag.set(ControlMode.DUTY_CYCLE, -DEMAND);
+    }
+    // I don't know if it will automatically set the demand to zero, but just to be safe, here is a method for turning off intake/outtake.
+    public void disable() {
+        mag.set(ControlMode.DUTY_CYCLE, 0);
     }
 }
