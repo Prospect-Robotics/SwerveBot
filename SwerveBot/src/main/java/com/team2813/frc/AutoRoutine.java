@@ -43,25 +43,49 @@ public enum AutoRoutine {
 //            new AutoInitDriveCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive()),
 //            new FollowCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive())
 //    ));
-    TWO_BALL_BOTTOM("2-ball Bottom", new SequentialCommandGroup(
+    TWO_BALL_TARMAC_BOTTOM("2-ball Tarmac Bottom", new SequentialCommandGroup(
             new AutoInitDriveCommand("TwoBall_Bottom_Intake", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("TwoBall_Bottom_Intake", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
             new FollowCommand("TwoBall_Bottom_IntakeToShoot", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
     )),
-    TWO_BALL_SIDE("2-ball Side", new SequentialCommandGroup(
+    TWO_BALL_TARMAC_SIDE("2-ball Tarmac Side", new SequentialCommandGroup(
             new AutoInitDriveCommand("TwoBall_Side_Intake", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("TwoBall_Side_Intake", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
             new FollowCommand("TwoBall_Side_IntakeToShoot", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
     )),
-    TWO_BALL_TOP("2-ball Top", new SequentialCommandGroup(
+    TWO_BALL_TARMAC_TOP("2-ball Tarmac Top", new SequentialCommandGroup(
             new AutoInitDriveCommand("TwoBall_Top_Intake", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("TwoBall_Top_Intake", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
             new FollowCommand("TwoBall_Top_IntakeToShoot", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
+    )),
+    TWO_BALL_FENDER_BOTTOM("2-ball Fender Bottom", new SequentialCommandGroup(
+            new AutoInitDriveCommand("2_Ball_Bottom_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to shoot balls
+            new FollowCommand("2_Ball_Bottom_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
+            new FollowCommand("2_Ball_Bottom_Fender_Forward", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
+    )),
+    TWO_BALL_FENDER_SIDE("2-ball Fender Side", new SequentialCommandGroup(
+            new AutoInitDriveCommand("2_Ball_Side_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to shoot balls
+            new FollowCommand("2_Ball_Side_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
+            new FollowCommand("2_Ball_Side_Fender_Forward", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
+    )),
+    TWO_BALL_FENDER_TOP("2-ball Fender Top", new SequentialCommandGroup(
+            new AutoInitDriveCommand("2_Ball_Top_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to shoot balls
+            new FollowCommand("2_Ball_Top_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
+            new FollowCommand("2_Ball_Top_Fender_Forward", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
     ));
 
