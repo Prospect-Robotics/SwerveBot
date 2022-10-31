@@ -9,21 +9,21 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 public class Magazine extends CommandBase {
     
-    private static final double DEMAND = 0.67;
+    private static final double INTAKE_DEMAND = 0.67;
+    private static final double OUTTAKE_DEMAND = -0.33;
     
     TalonFXWrapper mag;
 
     public Magazine() {
-        mag = new TalonFXWrapper(MAGAZINE_LEFT_ID, TalonFXInvertType.Clockwise);
-        mag.addFollower(MAGAZINE_RIGHT_ID, TalonFXInvertType.CounterClockwise);
+        mag = new TalonFXWrapper(MAG_MOTOR_ID, TalonFXInvertType.Clockwise);
     }
 
     public void intake() {
-        mag.set(ControlMode.DUTY_CYCLE, DEMAND);
+        mag.set(ControlMode.DUTY_CYCLE, INTAKE_DEMAND);
     }
 
     public void outtake() {
-        mag.set(ControlMode.DUTY_CYCLE, -DEMAND);
+        mag.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
     }
     // I don't know if it will automatically set the demand to zero, but just to be safe, here is a method for turning off intake/outtake.
     public void disable() {
