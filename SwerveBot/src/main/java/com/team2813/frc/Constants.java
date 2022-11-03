@@ -47,8 +47,7 @@ public final class Constants {
 
     // magazine
 
-    public static final int MAGAZINE_LEFT_ID = 14;
-    public static final int MAGAZINE_RIGHT_ID = 15;
+    public static final int MAG_MOTOR_ID = 14;
 
     // Physical Drive Constants
 
