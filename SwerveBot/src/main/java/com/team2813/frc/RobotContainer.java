@@ -11,6 +11,12 @@ import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
+import com.team2813.frc.subsystems.Magazine;
+
+import static com.team2813.frc.Controls.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +28,7 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final Drive drive = new Drive();
+    private final Magazine mag = new Magazine();
 
     private final XboxController controller = new XboxController(0);
     
@@ -55,6 +62,10 @@ public class RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        INTAKE_BUTTON.whenHeld(new InstantCommand(mag::intake, mag));
+        INTAKE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
+        OUTTAKE_BUTTON.whenHeld(new InstantCommand(mag::outtake, mag));
+        OUTTAKE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
     }
     
     

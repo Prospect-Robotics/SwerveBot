@@ -1,11 +1,11 @@
 package com.team2813.frc.subsystems;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.frc.Constants.*;
 import com.team2813.lib.motors.ControlMode;
 import com.team2813.lib.motors.SparkMaxWrapper;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Magazine extends CommandBase {
+public class Magazine extends SubsystemBase {
     
     private static final double INTAKE_DEMAND = 0.67;
     private static final double OUTTAKE_DEMAND = -0.33;
