@@ -1,19 +1,24 @@
 package com.team2813.frc.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.frc.Constants.*;
+
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.team2813.lib.motors.ControlMode;
-import com.team2813.lib.motors.SparkMaxWrapper;     
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.team2813.lib.motors.TalonFXWrapper;
+// import com.team2813.lib.motors.SparkMaxWrapper;     
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Magazine extends SubsystemBase {
     
     private static final double INTAKE_DEMAND = 0.67;
     private static final double OUTTAKE_DEMAND = -0.33;
     
-    SparkMaxWrapper mag;
+    // SparkMaxWrapper mag;
+    TalonFXWrapper mag;
 
     public Magazine() {
-        mag = new SparkMaxWrapper(MAG_MOTOR_ID, MotorType.kBrushless, true);
+        // mag = new SparkMaxWrapper(MAG_MOTOR_ID, MotorType.kBrushless, true);
+        mag = new TalonFXWrapper(MAG_MOTOR_ID, TalonFXInvertType.Clockwise);
     }
 
     public void intake() {
