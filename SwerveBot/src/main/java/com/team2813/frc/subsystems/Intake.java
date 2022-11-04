@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
     SolenoidGroup pistons;
 
     public Intake() {
-        motor = new SparkMaxWrapper(INTAKE_MOTOR_ID, MotorType.kBrushed, true);
+        motor = new SparkMaxWrapper(INTAKE_MOTOR_ID, MotorType.kBrushless, true);
         pistons = new SolenoidGroup(PCM_ID, PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
     }
 

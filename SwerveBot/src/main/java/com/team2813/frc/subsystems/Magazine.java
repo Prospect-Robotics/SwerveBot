@@ -13,7 +13,7 @@ public class Magazine extends SubsystemBase {
     SparkMaxWrapper mag;
 
     public Magazine() {
-        mag = new SparkMaxWrapper(MAG_MOTOR_ID, MotorType.kBrushed, true);
+        mag = new SparkMaxWrapper(MAG_MOTOR_ID, MotorType.kBrushless, true);
     }
 
     public void intake() {
