@@ -2,7 +2,7 @@ package com.team2813.frc.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.frc.Constants.*;
 import com.team2813.lib.motors.ControlMode;
-import com.team2813.lib.motors.SparkMaxWrapper;
+import com.team2813.lib.motors.SparkMaxWrapper;     
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Magazine extends SubsystemBase {

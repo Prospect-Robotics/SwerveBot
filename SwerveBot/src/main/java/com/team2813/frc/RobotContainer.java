@@ -6,14 +6,16 @@
 package com.team2813.frc;
 
 import com.team2813.frc.commands.DefaultDriveCommand;
-import com.team2813.frc.subsystems.Drive;
 import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import com.team2813.frc.subsystems.Magazine;
+import com.team2813.frc.subsystems.Intake;
+import com.team2813.frc.subsystems.Drive;
 
 import static com.team2813.frc.Controls.*;
 
@@ -29,6 +31,7 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     private final Drive drive = new Drive();
     private final Magazine mag = new Magazine();
+    private final Intake intake = new intake();
 
     private final XboxController controller = new XboxController(0);
     
@@ -62,8 +65,14 @@ public class RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-        INTAKE_BUTTON.whenHeld(new InstantCommand(mag::intake, mag));
-        INTAKE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
+        INTAKE_BUTTON.whenHeld(new ParallelCommandGroup(
+            new InstantCommand(mag::intake, mag),
+            new InstantCommand(intake::deployIntake, intake)
+        ));
+        INTAKE_BUTTON.whenReleased(new ParallelCommandGroup(
+            new InstantCommand(mag::disable, mag),
+            new InstantCommand(intake::retractIntake, intake)
+        ));
         OUTTAKE_BUTTON.whenHeld(new InstantCommand(mag::outtake, mag));
         OUTTAKE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
     }
