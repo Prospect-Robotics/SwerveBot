@@ -5,6 +5,8 @@
 
 package com.team2813.frc;
 
+import com.team2813.frc.commands.AutoIntakeCommand;
+import com.team2813.frc.commands.AutoOuttakeCommand;
 import com.team2813.frc.commands.DefaultDriveCommand;
 import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -67,18 +69,12 @@ public class RobotContainer {
         // Add button to command mappings here.
         // See
         // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-        INTAKE_BUTTON.whenHeld(new ParallelCommandGroup(
-                new InstantCommand(mag::intake, mag),
-                new InstantCommand(intake::intake, intake)
-        ));
+        INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag));
         INTAKE_BUTTON.whenReleased(new ParallelCommandGroup(
                 new InstantCommand(mag::disable, mag),
                 new InstantCommand(intake::retractIntake, intake)
         ));
-        OUTTAKE_BUTTON.whenHeld(new ParallelCommandGroup(
-            new InstantCommand(mag::outtake, mag),
-            new InstantCommand(intake::outtake, intake)
-        ));
+        OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag));
         OUTTAKE_BUTTON.whenReleased(new ParallelCommandGroup(
             new InstantCommand(mag::disable, mag),
             new InstantCommand(intake::retractIntake, intake)
