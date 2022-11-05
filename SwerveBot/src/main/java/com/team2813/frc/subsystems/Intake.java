@@ -11,7 +11,6 @@ import com.team2813.lib.solenoid.SolenoidGroup;
 import static com.team2813.frc.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
     
