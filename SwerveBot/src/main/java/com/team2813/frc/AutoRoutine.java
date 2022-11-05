@@ -87,6 +87,19 @@ public enum AutoRoutine {
             new WaitCommand(1), // TODO: Replace with command(s) to intake a ball
             new FollowCommand("2_Ball_Top_Fender_Forward", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
+    )),
+    ADVANCED_DEFENSE("Advanced Defense", new SequentialCommandGroup(
+            new WaitCommand(1), // TODO: Replace with command to shoot ball and then turn on intakew
+            new AutoInitDriveCommand("AdvancedDefense_IntakeFirst", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("AdvancedDefence_IntakeFirst", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1), // TODO: Replace with command to turn off intake
+            new RotateCommand(38.05, ROBOT_CONTAINER.getDrive()), // Rotate to face our hangar
+            new WaitCommand(1), // TODO: Replace with command to outtake
+            new RotateCommand(-68.05, ROBOT_CONTAINER.getDrive()), // Rotate to not interfere with other robots
+            new WaitCommand(7), // Wait for other robot to taxi
+            new WaitCommand(1), // TODO: Replace with command to turn on intake
+            new FollowCommand("AdvancedDefense_IntakeSecond", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1) // TODO: Replace with commands to outtake and then turn off intake
     ));
 
     private final String name;
