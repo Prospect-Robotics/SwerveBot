@@ -21,18 +21,23 @@ public class Intake extends SubsystemBase {
         pistons = new SolenoidGroup(PCM_ID, PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
     }
 
+    public void deployIntake() {
+        pistons.extend();
+    }
+
     public void intake() {
         motor.set(ControlMode.DUTY_CYCLE, INTAKE_DEMAND);
-        pistons.extend();
     }
 
     public void outtake() {
         motor.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
-        pistons.extend();
+    }
+
+    public void stopIntake() {
+        motor.set(ControlMode.DUTY_CYCLE, 0);
     }
 
     public void retractIntake() {
-        motor.set(ControlMode.DUTY_CYCLE, 0);
         pistons.retract();
     }
 }
