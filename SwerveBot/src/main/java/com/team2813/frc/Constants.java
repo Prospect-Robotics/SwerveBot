@@ -74,4 +74,8 @@ public final class Constants {
     // Auto Constants
     public static final double AUTO_MAX_VEL = 2.25; // m/s
     public static final double AUTO_MAX_ACCEL = 6; // m/s
+
+    // Intake and Outtake Speeds
+    public static final double INTAKE_DEMAND = 0.67;
+    public static final double OUTTAKE_DEMAND = -0.33;
 }
