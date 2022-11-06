@@ -12,7 +12,6 @@ public class Shooter extends SubsystemBase {
     TalonFXWrapper shooter;
     private static final double LOW_SHOOT_DEMAND = 0.25;
     private static final double HIGH_SHOOT_DEMAND = 0.75;
-    private static final double SPOOL_DEMAND = 0.5;
 
     public Shooter() {
         shooter = new TalonFXWrapper(SHOOTER_MOTOR_FRONT_ID, TalonFXInvertType.CounterClockwise);
@@ -23,11 +22,11 @@ public class Shooter extends SubsystemBase {
         shooter.set(ControlMode.DUTY_CYCLE, LOW_SHOOT_DEMAND);
     }
 
-    public void highShoot() {
+    public void spool() {
         shooter.set(ControlMode.DUTY_CYCLE, HIGH_SHOOT_DEMAND);
     }
 
-    public void spool() {
+    public void disable() {
+        shooter.set(ControlMode.DUTY_CYCLE, 0);
     }
-
 }

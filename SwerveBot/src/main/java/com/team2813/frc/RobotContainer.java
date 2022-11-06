@@ -13,12 +13,12 @@ import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import com.team2813.frc.subsystems.Magazine;
 import com.team2813.frc.subsystems.Intake;
 import com.team2813.frc.subsystems.Drive;
+import com.team2813.frc.subsystems.Shooter;
 
 import static com.team2813.frc.Controls.*;
 
@@ -36,6 +36,7 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final Magazine mag = new Magazine();
     private final Intake intake = new Intake();
+    private final Shooter shooter = new Shooter();
 
     private final XboxController controller = new XboxController(0);
 
@@ -74,6 +75,8 @@ public class RobotContainer {
         INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
         OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag));
         OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
+        SPOOL_BUTTON.whenHeld(new InstantCommand(shooter::spool, shooter));
+        SPOOL_BUTTON.whenReleased(new InstantCommand(shooter::disable, shooter));
     }
 
     /**
