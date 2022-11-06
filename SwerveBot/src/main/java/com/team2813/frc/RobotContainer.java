@@ -6,6 +6,7 @@
 package com.team2813.frc;
 
 import com.team2813.frc.commands.AutoIntakeCommand;
+import com.team2813.frc.commands.AutoLowShootCommand;
 import com.team2813.frc.commands.AutoOuttakeCommand;
 import com.team2813.frc.commands.AutoStopIntakeCommand;
 import com.team2813.frc.commands.DefaultDriveCommand;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import com.team2813.frc.subsystems.Magazine;
 import com.team2813.frc.subsystems.Intake;
@@ -77,6 +79,13 @@ public class RobotContainer {
         OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
         SPOOL_BUTTON.whenHeld(new InstantCommand(shooter::spool, shooter));
         SPOOL_BUTTON.whenReleased(new InstantCommand(shooter::disable, shooter));
+        HIGH_SHOOT_BUTTON.whenHeld(new InstantCommand(mag::intake, mag));
+        HIGH_SHOOT_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
+        LOW_SHOOT_BUTTON.whenHeld(new AutoLowShootCommand(shooter, mag));
+        LOW_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
+            new InstantCommand(shooter::disable, shooter),
+            new InstantCommand(mag::disable, mag)
+        ));
     }
 
     /**
