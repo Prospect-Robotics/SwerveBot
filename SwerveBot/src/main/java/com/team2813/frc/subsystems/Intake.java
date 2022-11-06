@@ -17,8 +17,8 @@ public class Intake extends SubsystemBase {
     SolenoidGroup pistons;
 
     public Intake() {
-        motor = new TalonFXWrapper(INTAKE_MOTOR_ID, TalonFXInvertType.Clockwise);
-        pistons = new SolenoidGroup(PCM_ID, PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
+        motor = new TalonFXWrapper(INTAKE_MOTOR_ID, TalonFXInvertType.CounterClockwise);
+        pistons = new SolenoidGroup(PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
     }
 
     public void deployIntake() {

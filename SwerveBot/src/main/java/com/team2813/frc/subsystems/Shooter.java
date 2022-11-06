@@ -1,6 +1,5 @@
 package com.team2813.frc.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.team2813.lib.motors.TalonFXWrapper;
 import static com.team2813.frc.Constants.*;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
