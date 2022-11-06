@@ -1,21 +1,20 @@
 package com.team2813.frc.subsystems;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.frc.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.team2813.lib.motors.ControlMode;
 import com.team2813.lib.motors.TalonFXWrapper;
-// import com.team2813.lib.motors.SparkMaxWrapper;     
-// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Magazine extends SubsystemBase {
-    
-    // SparkMaxWrapper mag;
+
     TalonFXWrapper mag;
 
     public Magazine() {
-        // mag = new SparkMaxWrapper(MAG_MOTOR_ID, MotorType.kBrushless, true);
         mag = new TalonFXWrapper(MAG_MOTOR_ID, TalonFXInvertType.Clockwise);
+        mag.setNeutralMode(NeutralMode.Brake);
     }
 
     public void intake() {
@@ -25,7 +24,7 @@ public class Magazine extends SubsystemBase {
     public void outtake() {
         mag.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
     }
-    // I don't know if it will automatically set the demand to zero, but just to be safe, here is a method for turning off intake/outtake.
+
     public void disable() {
         mag.set(ControlMode.DUTY_CYCLE, 0);
     }

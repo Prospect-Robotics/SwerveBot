@@ -73,14 +73,21 @@ public class RobotContainer {
         // Add button to command mappings here.
         // See
         // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        
         INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag));
         INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
+
         OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag));
         OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
-        SPOOL_BUTTON.whenHeld(new InstantCommand(shooter::spool, shooter));
-        SPOOL_BUTTON.whenReleased(new InstantCommand(shooter::disable, shooter));
+
+        SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spool, shooter));
+
         HIGH_SHOOT_BUTTON.whenHeld(new InstantCommand(mag::intake, mag));
-        HIGH_SHOOT_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
+        HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
+                new InstantCommand(shooter::disable, shooter),
+                new InstantCommand(mag::disable, mag)
+        ));
+
         LOW_SHOOT_BUTTON.whenHeld(new AutoLowShootCommand(shooter, mag));
         LOW_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
             new InstantCommand(shooter::disable, shooter),
