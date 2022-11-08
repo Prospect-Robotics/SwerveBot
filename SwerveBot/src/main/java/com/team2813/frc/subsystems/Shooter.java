@@ -14,14 +14,14 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         shooter = new TalonFXWrapper(SHOOTER_MOTOR_FRONT_ID, TalonFXInvertType.CounterClockwise);
-        shooter.addFollower(SHOOTER_MOTOR_BACK_ID, TalonFXInvertType.OpposeMaster);
+        shooter.addFollower(SHOOTER_MOTOR_BACK_ID, TalonFXInvertType.FollowMaster);
     }
 
     public void lowShoot() {
         shooter.set(ControlMode.DUTY_CYCLE, LOW_SHOOT_DEMAND);
     }
 
-    public void spool() {
+    public void spoolToHigh() {
         shooter.set(ControlMode.DUTY_CYCLE, HIGH_SHOOT_DEMAND);
     }
 

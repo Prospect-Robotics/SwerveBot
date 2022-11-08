@@ -80,7 +80,7 @@ public class RobotContainer {
         OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag));
         OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag));
 
-        SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spool, shooter));
+        SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spoolToHigh, shooter));
 
         HIGH_SHOOT_BUTTON.whenHeld(new InstantCommand(mag::intake, mag));
         HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
