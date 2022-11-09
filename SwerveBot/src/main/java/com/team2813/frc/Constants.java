@@ -57,16 +57,14 @@ public final class Constants {
 
     public static final int INTAKE_MOTOR_ID = 15;
 
-    // PCM
-
-    public static final int PCM_ID = 16;
-    public static final int LEFT_PISTON_PORT = 3;
-    public static final int RIGHT_PISTON_PORT = 4;
+    // Piston stuff
+    public static final int LEFT_PISTON_PORT = 1;
+    public static final int RIGHT_PISTON_PORT = 2;
 
     // shooter
 
-    public static final int SHOOTER_MOTOR_FRONT_ID = 17;
-    public static final int SHOOTER_MOTOR_BACK_ID = 18;
+    public static final int SHOOTER_MOTOR_FRONT_ID = 16;
+    public static final int SHOOTER_MOTOR_BACK_ID = 17;
 
     // Physical Drive Constants
 
