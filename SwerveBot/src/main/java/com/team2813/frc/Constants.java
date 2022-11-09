@@ -60,8 +60,8 @@ public final class Constants {
     // PCM
 
     public static final int PCM_ID = 16;
-    public static final int LEFT_PISTON_PORT = 0;
-    public static final int RIGHT_PISTON_PORT = 1;
+    public static final int LEFT_PISTON_PORT = 3;
+    public static final int RIGHT_PISTON_PORT = 4;
 
     // shooter
 
