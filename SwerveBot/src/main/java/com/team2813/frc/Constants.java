@@ -58,8 +58,8 @@ public final class Constants {
     public static final int INTAKE_MOTOR_ID = 15;
 
     // Piston stuff
-    public static final int LEFT_PISTON_PORT = 0;
-    public static final int RIGHT_PISTON_PORT = 1;
+    public static final int LEFT_PISTON_PORT = 1;
+    public static final int RIGHT_PISTON_PORT = 2;
 
     // shooter
 
