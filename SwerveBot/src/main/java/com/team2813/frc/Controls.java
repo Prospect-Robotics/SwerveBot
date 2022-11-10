@@ -10,6 +10,7 @@ public final class Controls {
     public static final JoystickButton INTAKE_BUTTON = new JoystickButton(OPERATOR, PS4Controller.Button.kR1.value);
     public static final JoystickButton OUTTAKE_BUTTON = new JoystickButton(OPERATOR, PS4Controller.Button.kL1.value);
     public static final JoystickButton SPOOL_BUTTON = new JoystickButton(OPERATOR, PS4Controller.Button.kTriangle.value);
+    public static final JoystickButton NUGGET_BUTTON = new JoystickButton(OPERATOR, PS4Controller.Button.kOptions.value);
 
     public static final JoystickButton LOW_SHOOT_BUTTON = new JoystickButton(DRIVER, PS4Controller.Button.kL1.value);
     public static final JoystickButton HIGH_SHOOT_BUTTON = new JoystickButton(DRIVER, PS4Controller.Button.kR1.value);

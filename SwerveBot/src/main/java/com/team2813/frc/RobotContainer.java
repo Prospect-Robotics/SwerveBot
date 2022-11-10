@@ -21,6 +21,7 @@ import com.team2813.frc.subsystems.Magazine;
 import com.team2813.frc.subsystems.Intake;
 import com.team2813.frc.subsystems.Drive;
 import com.team2813.frc.subsystems.Shooter;
+import com.team2813.frc.subsystems.Nugget;
 
 import static com.team2813.frc.Controls.*;
 
@@ -39,6 +40,7 @@ public class RobotContainer {
     private final Magazine mag = new Magazine();
     private final Intake intake = new Intake();
     private final Shooter shooter = new Shooter();
+    private final Nugget nugget = new Nugget();
 
     private final XboxController controller = new XboxController(0);
 
@@ -93,6 +95,8 @@ public class RobotContainer {
             new InstantCommand(shooter::disable, shooter),
             new InstantCommand(mag::disable, mag)
         ));
+        NUGGET_BUTTON.whenPressed(nugget::activate, nugget);
+        NUGGET_BUTTON.whenReleased(nugget::deactivate, nugget);
     }
 
     /**
