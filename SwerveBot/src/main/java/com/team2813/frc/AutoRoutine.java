@@ -3,7 +3,6 @@ package com.team2813.frc;
 import com.team2813.frc.commands.AutoInitDriveCommand;
 import com.team2813.frc.commands.FollowCommand;
 import com.team2813.frc.commands.RotateCommand;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -89,7 +88,7 @@ public enum AutoRoutine {
             new WaitCommand(1) // TODO: Replace with command(s) to shoot balls
     )),
     ADVANCED_DEFENSE("Advanced Defense", new SequentialCommandGroup(
-            new WaitCommand(1), // TODO: Replace with command to shoot ball and then turn on intakew
+            new WaitCommand(1), // TODO: Replace with command to shoot ball and then turn on intake
             new AutoInitDriveCommand("AdvancedDefense_IntakeFirst", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("AdvancedDefence_IntakeFirst", ROBOT_CONTAINER.getDrive()),
             new WaitCommand(1), // TODO: Replace with command to turn off intake
