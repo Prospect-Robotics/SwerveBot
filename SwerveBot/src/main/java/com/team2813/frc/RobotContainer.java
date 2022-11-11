@@ -10,6 +10,7 @@ import com.team2813.frc.commands.AutoLowShootCommand;
 import com.team2813.frc.commands.AutoOuttakeCommand;
 import com.team2813.frc.commands.AutoStopIntakeCommand;
 import com.team2813.frc.commands.DefaultDriveCommand;
+import com.team2813.frc.commands.util.AutoHighShootCommand;
 import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -85,7 +86,7 @@ public class RobotContainer {
 
         //SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spoolToHigh, shooter));
 
-        HIGH_SHOOT_BUTTON.whenHeld(new InstantCommand(mag::shoot, mag));
+        HIGH_SHOOT_BUTTON.whenHeld(new AutoHighShootCommand(shooter, mag));
         HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
                 new InstantCommand(shooter::disable, shooter),
                 new InstantCommand(mag::disable, mag)

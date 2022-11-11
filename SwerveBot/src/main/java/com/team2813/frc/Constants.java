@@ -85,7 +85,7 @@ public final class Constants {
     // Intake and Outtake Speeds
     public static final double INTAKE_DEMAND = 0.8;
     public static final double MAG_INTAKE_DEMAND = 0.15;
-    public static final double MAG_SHOOT_DEMAND = 0.1;
+    public static final double MAG_SHOOT_DEMAND = 0.17;
     public static final double SHUFFLE_DEMAND = -0.1;
     public static final double OUTTAKE_DEMAND = -0.15;
 }

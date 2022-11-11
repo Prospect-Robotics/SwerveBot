@@ -11,7 +11,7 @@ public class AutoLowShootCommand extends SequentialCommandGroup {
         super(
             new InstantCommand(shooter::lowShoot, shooter),
             new WaitCommand(0.25),
-            new InstantCommand(mag::intake, mag)
+            new InstantCommand(mag::shoot, mag)
         );
     }
 }
