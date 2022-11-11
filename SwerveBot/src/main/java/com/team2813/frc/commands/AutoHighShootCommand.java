@@ -17,7 +17,7 @@ public class AutoHighShootCommand extends SequentialCommandGroup {
                 new WaitCommand(2),
                 new ParallelCommandGroup(
                         new InstantCommand(shooterSubsystem::disable, shooterSubsystem),
-                        new InstantCommand(magazineSubsystem::disable, shooterSubsystem)
+                        new InstantCommand(magazineSubsystem::disable, magazineSubsystem)
                 )
         );
     }
