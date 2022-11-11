@@ -2,7 +2,6 @@ package com.team2813.frc;
 
 import com.team2813.frc.commands.*;
 import com.team2813.frc.commands.AutoHighShootCommand;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -11,38 +10,38 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import static com.team2813.frc.Robot.ROBOT_CONTAINER;
 public enum AutoRoutine {
 
-    STRAIGHT_TEST("Straight Test", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Straight_Test", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Straight_Test", ROBOT_CONTAINER.getDrive())
-    )),
-    STRAFE_TEST("Strafe Test", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Strafe_Test", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Strafe_Test", ROBOT_CONTAINER.getDrive())
-    )),
-    ROTATE_90_TEST("Rotate 90 Test", new SequentialCommandGroup(
-            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
-            new RotateCommand(90, ROBOT_CONTAINER.getDrive())
-    )),
-    ROTATE_180_Test("Rotate 180 Test", new SequentialCommandGroup(
-            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
-            new RotateCommand(180, ROBOT_CONTAINER.getDrive())
-    )),
-    ADVANCED_TEST_1("Advanced Test 1", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive())
-    )),
-    ADVANCED_TEST_2("Advanced Test 2", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive())
-    )),
-    ADVANCED_TEST_3("Advanced Test 3", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive())
-    )),
-    ADVANCED_TEST_4("Advanced Test 4", new SequentialCommandGroup(
-            new AutoInitDriveCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive())
-    )),
+//    STRAIGHT_TEST("Straight Test", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Straight_Test", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Straight_Test", ROBOT_CONTAINER.getDrive())
+//    )),
+//    STRAFE_TEST("Strafe Test", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Strafe_Test", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Strafe_Test", ROBOT_CONTAINER.getDrive())
+//    )),
+//    ROTATE_90_TEST("Rotate 90 Test", new SequentialCommandGroup(
+//            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
+//            new RotateCommand(90, ROBOT_CONTAINER.getDrive())
+//    )),
+//    ROTATE_180_Test("Rotate 180 Test", new SequentialCommandGroup(
+//            new AutoInitDriveCommand(new Rotation2d(), ROBOT_CONTAINER.getDrive()),
+//            new RotateCommand(180, ROBOT_CONTAINER.getDrive())
+//    )),
+//    ADVANCED_TEST_1("Advanced Test 1", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Advanced_Test_1", ROBOT_CONTAINER.getDrive())
+//    )),
+//    ADVANCED_TEST_2("Advanced Test 2", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Advanced_Test_2", ROBOT_CONTAINER.getDrive())
+//    )),
+//    ADVANCED_TEST_3("Advanced Test 3", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Advanced_Test_3", ROBOT_CONTAINER.getDrive())
+//    )),
+//    ADVANCED_TEST_4("Advanced Test 4", new SequentialCommandGroup(
+//            new AutoInitDriveCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("Advanced_Test_4", ROBOT_CONTAINER.getDrive())
+//    )),
     TWO_BALL_TARMAC_BOTTOM("2-ball Tarmac Bottom", new SequentialCommandGroup(
             new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
             new AutoInitDriveCommand("TwoBall_Bottom_Intake", ROBOT_CONTAINER.getDrive()),
@@ -118,27 +117,32 @@ public enum AutoRoutine {
             ),
             new AutoLowShootCommand(ROBOT_CONTAINER.getShooter(), ROBOT_CONTAINER.getMag())
     )),
-    ADVANCED_DEFENSE("Advanced Defense", new SequentialCommandGroup(
-            new AutoLowShootCommand(ROBOT_CONTAINER.getShooter(), ROBOT_CONTAINER.getMag()),
-            new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
-            new AutoInitDriveCommand("AdvancedDefense_IntakeFirst", ROBOT_CONTAINER.getDrive()),
-            new FollowCommand("AdvancedDefence_IntakeFirst", ROBOT_CONTAINER.getDrive()),
-            new AutoStopIntakeCommand(
-                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter(), false),
-            new RotateCommand(38.05, ROBOT_CONTAINER.getDrive()), // Rotate to face our hangar
-            new AutoOuttakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
-            new WaitCommand(2),
-            new AutoStopIntakeCommand(
-                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter(), false),
-            new RotateCommand(-68.05, ROBOT_CONTAINER.getDrive()), // Rotate to not interfere with other robots
-            new WaitCommand(7), // Wait for other robot to taxi
-            new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
-            new FollowCommand("AdvancedDefense_IntakeSecond", ROBOT_CONTAINER.getDrive()),
-            new WaitCommand(1),
-            new AutoOuttakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
-            new AutoStopIntakeCommand(
-                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter(), false)
+    TAXI("Taxi", new SequentialCommandGroup(
+            new AutoInitDriveCommand("Taxi", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("Taxi", ROBOT_CONTAINER.getDrive())
     ));
+    // Has issues and no time to fix, so it's commented out
+//    ADVANCED_DEFENSE("Advanced Defense", new SequentialCommandGroup(
+//            new AutoLowShootCommand(ROBOT_CONTAINER.getShooter(), ROBOT_CONTAINER.getMag()),
+//            new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new AutoInitDriveCommand("AdvancedDefense_IntakeFirst", ROBOT_CONTAINER.getDrive()),
+//            new FollowCommand("AdvancedDefence_IntakeFirst", ROBOT_CONTAINER.getDrive()),
+//            new AutoStopIntakeCommand(
+//                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new RotateCommand(38.05, ROBOT_CONTAINER.getDrive()), // Rotate to face our hangar
+//            new AutoOuttakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new WaitCommand(2),
+//            new AutoStopIntakeCommand(
+//                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new RotateCommand(-68.05, ROBOT_CONTAINER.getDrive()), // Rotate to not interfere with other robots
+//            new WaitCommand(7), // Wait for other robot to taxi
+//            new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new FollowCommand("AdvancedDefense_IntakeSecond", ROBOT_CONTAINER.getDrive()),
+//            new WaitCommand(1),
+//            new AutoOuttakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+//            new AutoStopIntakeCommand(
+//                    ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter())
+//    ));
 
     private final String name;
     private final Command command;

@@ -86,10 +86,10 @@ public class RobotContainer {
         // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         
         INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag, shooter));
-        INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter, false));
+        INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
 
         OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag, shooter));
-        OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter, false));
+        OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
 
         SHUFFLE_BUTTON.whenHeld(new InstantCommand(mag::shuffle, mag));
         SHUFFLE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
