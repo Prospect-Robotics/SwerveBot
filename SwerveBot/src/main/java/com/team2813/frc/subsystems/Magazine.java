@@ -18,11 +18,19 @@ public class Magazine extends SubsystemBase {
     }
 
     public void intake() {
-        mag.set(ControlMode.DUTY_CYCLE, INTAKE_DEMAND);
+        mag.set(ControlMode.DUTY_CYCLE, MAG_INTAKE_DEMAND);
+    }
+
+    public void shoot() {
+        mag.set(ControlMode.DUTY_CYCLE, MAG_SHOOT_DEMAND);
     }
 
     public void outtake() {
         mag.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
+    }
+
+    public void shuffle() {
+        mag.set(ControlMode.DUTY_CYCLE, SHUFFLE_DEMAND);
     }
 
     public void disable() {

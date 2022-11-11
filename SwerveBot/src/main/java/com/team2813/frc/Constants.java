@@ -83,6 +83,9 @@ public final class Constants {
     public static final double AUTO_MAX_ACCEL = 6; // m/s
 
     // Intake and Outtake Speeds
-    public static final double INTAKE_DEMAND = 0.67;
-    public static final double OUTTAKE_DEMAND = -0.33;
+    public static final double INTAKE_DEMAND = 0.8;
+    public static final double MAG_INTAKE_DEMAND = 0.15;
+    public static final double MAG_SHOOT_DEMAND = 0.1;
+    public static final double SHUFFLE_DEMAND = -0.1;
+    public static final double OUTTAKE_DEMAND = -0.15;
 }
