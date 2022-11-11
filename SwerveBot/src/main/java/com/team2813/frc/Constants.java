@@ -9,11 +9,15 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -45,6 +49,23 @@ public final class Constants {
 
     public static final int PIGEON_ID = 13;
 
+    // magazine
+
+    public static final int MAG_MOTOR_ID = 14;
+
+    // intake
+
+    public static final int INTAKE_MOTOR_ID = 15;
+
+    // Piston stuff
+    public static final int LEFT_PISTON_PORT = 1;
+    public static final int RIGHT_PISTON_PORT = 2;
+
+    // shooter
+
+    public static final int SHOOTER_MOTOR_FRONT_ID = 16;
+    public static final int SHOOTER_MOTOR_BACK_ID = 17;
+
     // Physical Drive Constants
 
     // Steer offsets
@@ -60,4 +81,11 @@ public final class Constants {
     // Auto Constants
     public static final double AUTO_MAX_VEL = 2.25; // m/s
     public static final double AUTO_MAX_ACCEL = 6; // m/s
+
+    // Intake and Outtake Speeds
+    public static final double INTAKE_DEMAND = 0.8;
+    public static final double MAG_INTAKE_DEMAND = 0.15;
+    public static final double MAG_SHOOT_DEMAND = 0.17;
+    public static final double SHUFFLE_DEMAND = -0.1;
+    public static final double OUTTAKE_DEMAND = -0.15;
 }
