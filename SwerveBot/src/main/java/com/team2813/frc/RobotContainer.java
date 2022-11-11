@@ -10,13 +10,11 @@ import com.team2813.frc.commands.AutoLowShootCommand;
 import com.team2813.frc.commands.AutoOuttakeCommand;
 import com.team2813.frc.commands.AutoStopIntakeCommand;
 import com.team2813.frc.commands.DefaultDriveCommand;
-import com.team2813.frc.commands.util.AutoHighShootCommand;
+import com.team2813.frc.commands.AutoHighShootCommand;
 import com.team2813.frc.util.ShuffleboardData;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.*;
 
 import com.team2813.frc.subsystems.Magazine;
 import com.team2813.frc.subsystems.Intake;
@@ -62,6 +60,18 @@ public class RobotContainer {
         return drive;
     }
 
+    Intake getIntake() {
+        return intake;
+    }
+
+    Magazine getMag() {
+        return mag;
+    }
+
+    Shooter getShooter() {
+        return shooter;
+    }
+
     /**
      * Use this method to define your button->command mappings. Buttons can be
      * created by
@@ -76,23 +86,31 @@ public class RobotContainer {
         // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         
         INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag, shooter));
-        INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
+        INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter, false));
 
         OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag, shooter));
-        OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
+        OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter, false));
 
         SHUFFLE_BUTTON.whenHeld(new InstantCommand(mag::shuffle, mag));
         SHUFFLE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
 
         //SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spoolToHigh, shooter));
 
-        HIGH_SHOOT_BUTTON.whenHeld(new AutoHighShootCommand(shooter, mag));
+        HIGH_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
+                new InstantCommand(shooter::highShoot, shooter),
+                new WaitCommand(0.25),
+                new InstantCommand(mag::shoot, mag)
+        ));
         HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
                 new InstantCommand(shooter::disable, shooter),
                 new InstantCommand(mag::disable, mag)
         ));
 
-        LOW_SHOOT_BUTTON.whenHeld(new AutoLowShootCommand(shooter, mag));
+        LOW_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
+                new InstantCommand(shooter::lowShoot, shooter),
+                new WaitCommand(0.25),
+                new InstantCommand(mag::shoot, mag)
+        ));
         LOW_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
             new InstantCommand(shooter::disable, shooter),
             new InstantCommand(mag::disable, mag)
