@@ -69,8 +69,8 @@ public final class Constants {
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(169.98046875);
-    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(287.138671875);
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(161.3671875);
+    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(285.205078125);
     public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(150.732421875);
     public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(250.576171875);
 
@@ -83,7 +83,7 @@ public final class Constants {
     public static final double AUTO_MAX_ACCEL = 6; // m/s
 
     // Intake and Outtake Speeds
-    public static final double INTAKE_DEMAND = 0.8;
+    public static final double INTAKE_DEMAND = 0.85;
     public static final double MAG_INTAKE_DEMAND = 0.15;
     public static final double MAG_SHOOT_DEMAND = 0.17;
     public static final double SHUFFLE_DEMAND = -0.1;

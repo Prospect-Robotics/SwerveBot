@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
     TalonFXWrapper shooter;
     private static final double HIGH_SHOOT_DEMAND = 0.45;
-    private static final double LOW_SHOOT_DEMAND = 0.15;
+    private static final double LOW_SHOOT_DEMAND = 0.135;
     private static final double KICK_DEMAND = -0.1;
 
     public Shooter() {
