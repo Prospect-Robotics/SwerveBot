@@ -34,7 +34,6 @@ public class RotateCommand extends CommandBase {
         this.driveSubsystem = driveSubsystem;
         this.degreesToRotateBy = degreesToRotateBy;
 
-        setpoint = driveSubsystem.getRotation().getRadians() + Math.toRadians(degreesToRotateBy);
         swerveModuleStatesConsumer = getSwerveModuleStatesConsumer(driveSubsystem);
         addRequirements(driveSubsystem);
     }

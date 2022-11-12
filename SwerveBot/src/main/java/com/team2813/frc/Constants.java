@@ -71,7 +71,7 @@ public final class Constants {
     // Steer offsets
     public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(169.98046875);
     public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(287.138671875);
-    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(150.380859375);
+    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(150.732421875);
     public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(250.576171875);
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
@@ -85,7 +85,7 @@ public final class Constants {
     // Intake and Outtake Speeds
     public static final double INTAKE_DEMAND = 0.8;
     public static final double MAG_INTAKE_DEMAND = 0.15;
-    public static final double MAG_SHOOT_DEMAND = 0.1;
+    public static final double MAG_SHOOT_DEMAND = 0.17;
     public static final double SHUFFLE_DEMAND = -0.1;
     public static final double OUTTAKE_DEMAND = -0.15;
 }
