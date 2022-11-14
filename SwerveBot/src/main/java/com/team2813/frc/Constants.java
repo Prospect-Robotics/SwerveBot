@@ -65,14 +65,13 @@ public final class Constants {
 
     public static final int SHOOTER_MOTOR_FRONT_ID = 16;
     public static final int SHOOTER_MOTOR_BACK_ID = 17;
-
     // Physical Drive Constants
 
     // Steer offsets
-    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(161.3671875);
-    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(285.205078125);
-    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(150.732421875);
-    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(250.576171875);
+    public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(160.927734375);
+    public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(287.314453125);
+    public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(148.974609375);
+    public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(248.5546875);
 
     public static final double TRACKWIDTH = Units.inchesToMeters(19.5); // meters
     public static final double WHEELBASE = Units.inchesToMeters(21.5); // meters
