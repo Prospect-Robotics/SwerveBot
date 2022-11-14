@@ -120,6 +120,19 @@ public enum AutoRoutine {
     TAXI("Taxi", new SequentialCommandGroup(
             new AutoInitDriveCommand("Taxi", ROBOT_CONTAINER.getDrive()),
             new FollowCommand("Taxi", ROBOT_CONTAINER.getDrive())
+    )),
+    // Developed during Madtown but never used
+    TWO_BALL_FENDER_TOP_HIGH("2-ball Fender Top", new SequentialCommandGroup(
+            new AutoLowShootCommand(ROBOT_CONTAINER.getShooter(), ROBOT_CONTAINER.getMag()),
+            new AutoIntakeCommand(ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter()),
+            new AutoInitDriveCommand("2_Ball_Top_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new FollowCommand("2_Ball_Top_Fender_Back", ROBOT_CONTAINER.getDrive()),
+            new WaitCommand(1),
+            new ParallelCommandGroup(
+                new AutoStopIntakeCommand(
+                        ROBOT_CONTAINER.getIntake(), ROBOT_CONTAINER.getMag(), ROBOT_CONTAINER.getShooter(), true),
+                new FollowCommand("TwoBall_Top_Fender_ShootHigh", ROBOT_CONTAINER.getDrive())),
+            new AutoHighShootCommand(ROBOT_CONTAINER.getShooter(), ROBOT_CONTAINER.getMag())
     ));
     // Has issues and no time to fix, so it's commented out
 //    ADVANCED_DEFENSE("Advanced Defense", new SequentialCommandGroup(
