@@ -42,7 +42,7 @@ public class TalonFXWrapper extends TalonFX implements Motor {
         TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
         motorConfiguration.voltageCompSaturation = 12;
         motorConfiguration.supplyCurrLimit = new SupplyCurrentLimitConfiguration(true, 40, 40, 0.25);
-        configAllSettings(motorConfiguration);
+        ConfigUtils.ctreConfig(() -> configAllSettings(motorConfiguration));
 
         enableVoltageCompensation(true);
         setInverted(invertType);
