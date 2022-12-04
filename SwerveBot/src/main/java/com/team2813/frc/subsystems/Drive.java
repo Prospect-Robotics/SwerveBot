@@ -28,7 +28,7 @@ public class Drive extends SubsystemBase {
 
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-            WHEEL_CIRCUMFERENCE; // m/s
+            WHEEL_CIRCUMFERENCE / 2.0; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
     public static final double MAX_ANGULAR_ACCELERATION = Math.PI;
 
