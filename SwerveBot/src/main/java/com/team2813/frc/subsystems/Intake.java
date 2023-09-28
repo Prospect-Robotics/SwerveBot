@@ -10,34 +10,34 @@ import com.team2813.lib.solenoid.SolenoidGroup;
 import static com.team2813.frc.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-
+@SuppressWarnings("unused")
 public class Intake extends SubsystemBase {
 
-    TalonFXWrapper motor;
-    SolenoidGroup pistons;
+    // TalonFXWrapper motor;
+    // SolenoidGroup pistons;
 
     public Intake() {
-        motor = new TalonFXWrapper(INTAKE_MOTOR_ID, TalonFXInvertType.CounterClockwise);
-        pistons = new SolenoidGroup(PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
+        // motor = new TalonFXWrapper(INTAKE_MOTOR_ID, TalonFXInvertType.CounterClockwise);
+        // pistons = new SolenoidGroup(PneumaticsModuleType.CTREPCM, LEFT_PISTON_PORT, RIGHT_PISTON_PORT);
     }
 
     public void deployIntake() {
-        pistons.extend();
+        // pistons.extend();
     }
 
     public void intake() {
-        motor.set(ControlMode.DUTY_CYCLE, INTAKE_DEMAND);
+        // motor.set(ControlMode.DUTY_CYCLE, INTAKE_DEMAND);
     }
 
     public void outtake() {
-        motor.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
+        // motor.set(ControlMode.DUTY_CYCLE, OUTTAKE_DEMAND);
     }
 
     public void stopIntake() {
-        motor.set(ControlMode.DUTY_CYCLE, 0);
+        // motor.set(ControlMode.DUTY_CYCLE, 0);
     }
 
     public void retractIntake() {
-        pistons.retract();
+        // pistons.retract();
     }
 }

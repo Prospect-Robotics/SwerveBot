@@ -35,9 +35,9 @@ import static com.team2813.frc.Controls.*;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drive drive = new Drive();
-    private final Magazine mag = new Magazine();
-    private final Intake intake = new Intake();
-    private final Shooter shooter = new Shooter();
+    // private final Magazine mag = new Magazine();
+    // private final Intake intake = new Intake();
+    // private final Shooter shooter = new Shooter();
 
     private final XboxController controller = new XboxController(0);
 
@@ -60,16 +60,22 @@ public class RobotContainer {
         return drive;
     }
 
+	@Deprecated
     Intake getIntake() {
-        return intake;
+        // return intake;
+		return null;
     }
 
+	@Deprecated
     Magazine getMag() {
-        return mag;
+        // return mag;
+		return null;
     }
 
+	@Deprecated
     Shooter getShooter() {
-        return shooter;
+		// return shooter
+        return null;
     }
 
     /**
@@ -85,36 +91,36 @@ public class RobotContainer {
         // See
         // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         
-        INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag, shooter));
-        INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
+        // INTAKE_BUTTON.whenHeld(new AutoIntakeCommand(intake, mag, shooter));
+        // INTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
 
-        OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag, shooter));
-        OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
+        // OUTTAKE_BUTTON.whenHeld(new AutoOuttakeCommand(intake, mag, shooter));
+        // OUTTAKE_BUTTON.whenReleased(new AutoStopIntakeCommand(intake, mag, shooter));
 
-        SHUFFLE_BUTTON.whenHeld(new InstantCommand(mag::shuffle, mag));
-        SHUFFLE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
+        // SHUFFLE_BUTTON.whenHeld(new InstantCommand(mag::shuffle, mag));
+        // SHUFFLE_BUTTON.whenReleased(new InstantCommand(mag::disable, mag));
 
         //SPOOL_BUTTON.whenPressed(new InstantCommand(shooter::spoolToHigh, shooter));
 
-        HIGH_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
-                new InstantCommand(shooter::highShoot, shooter),
-                new WaitCommand(0.25),
-                new InstantCommand(mag::shoot, mag)
-        ));
-        HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
-                new InstantCommand(shooter::disable, shooter),
-                new InstantCommand(mag::disable, mag)
-        ));
+        // HIGH_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
+        //         new InstantCommand(shooter::highShoot, shooter),
+        //         new WaitCommand(0.25),
+        //         new InstantCommand(mag::shoot, mag)
+        // ));
+        // HIGH_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
+        //         new InstantCommand(shooter::disable, shooter),
+        //         new InstantCommand(mag::disable, mag)
+        // ));
 
-        LOW_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
-                new InstantCommand(shooter::lowShoot, shooter),
-                new WaitCommand(0.25),
-                new InstantCommand(mag::shoot, mag)
-        ));
-        LOW_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
-            new InstantCommand(shooter::disable, shooter),
-            new InstantCommand(mag::disable, mag)
-        ));
+        // LOW_SHOOT_BUTTON.whenHeld(new SequentialCommandGroup(
+        //         new InstantCommand(shooter::lowShoot, shooter),
+        //         new WaitCommand(0.25),
+        //         new InstantCommand(mag::shoot, mag)
+        // ));
+        // LOW_SHOOT_BUTTON.whenReleased(new ParallelCommandGroup(
+        //     new InstantCommand(shooter::disable, shooter),
+        //     new InstantCommand(mag::disable, mag)
+        // ));
     }
 
     /**

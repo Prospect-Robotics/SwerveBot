@@ -13,7 +13,7 @@ public class ConfigUtils {
     public static void ctreConfig(Supplier<ErrorCode> configMethod) {
         ErrorCode errorCode = configMethod.get();
         if (errorCode != ErrorCode.OK) {
-            DriverStation.reportError(String.format("%s: %s", "Config Attempt 1 Failed", errorCode.toString()), false);
+            DriverStation.reportError(String.format("%s: %s", "Config Attempt 1 Failed", errorCode.toString()), true);
             for (int i = 1; i < ATTEMPTS; i++) {
                 errorCode = configMethod.get();
                 if (errorCode == ErrorCode.OK) {
